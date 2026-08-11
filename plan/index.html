@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>그리도스 상세페이지 기획안 v1.2</title>
+<style>
+  :root {
+    --paper: #F7F6F2;
+    --ink: #20242C;
+    --muted: #6B7180;
+    --line: #DBDAD3;
+    --frame-bg: #FFFFFF;
+    --wf-line: #B9BDC6;
+    --wf-fill: #EFF0ED;
+    --wf-fill2: #E3E4E0;
+    --accent: #2F5DE0;
+    --accent-soft: #E7EDFC;
+    --accent-ink: #FFFFFF;
+    --amber: #A36308;
+    --amber-bg: #F5E9D2;
+    --good: #1F7A4D;
+    --good-bg: #E3F0E9;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #15171C; --ink: #E8E9EC; --muted: #9BA1AD; --line: #2C2F37;
+      --frame-bg: #1D2027; --wf-line: #4A4F5B; --wf-fill: #242832; --wf-fill2: #2B303B;
+      --accent: #7A97F2; --accent-soft: #232B41; --accent-ink: #10131A;
+      --amber: #E2B368; --amber-bg: #33291A; --good: #5CBE8E; --good-bg: #1D2E26;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #15171C; --ink: #E8E9EC; --muted: #9BA1AD; --line: #2C2F37;
+    --frame-bg: #1D2027; --wf-line: #4A4F5B; --wf-fill: #242832; --wf-fill2: #2B303B;
+    --accent: #7A97F2; --accent-soft: #232B41; --accent-ink: #10131A;
+    --amber: #E2B368; --amber-bg: #33291A; --good: #5CBE8E; --good-bg: #1D2E26;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--paper); color: var(--ink);
+    font-family: "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", -apple-system, sans-serif;
+    line-height: 1.65; margin: 0; padding: 0 20px 96px;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; }
+  .mono { font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+
+  /* ── 문서 헤더 ─────────────────────── */
+  .doc-head { padding: 56px 0 28px; border-bottom: 2px solid var(--ink); }
+  .doc-eyebrow { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12px; letter-spacing: .14em; color: var(--accent); text-transform: uppercase; margin: 0 0 10px; }
+  .doc-head h1 { font-size: clamp(26px, 4vw, 40px); font-weight: 800; letter-spacing: -0.02em; margin: 0 0 14px; text-wrap: balance; line-height: 1.25; }
+  .doc-meta { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 13px; color: var(--muted); margin: 0 0 10px; }
+  .doc-meta b { color: var(--ink); font-weight: 600; }
+  .changelog { font-size: 12.5px; color: var(--muted); background: var(--frame-bg); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; margin-top: 14px; }
+  .changelog b { color: var(--ink); }
+
+  /* ── 파트 구분 ─────────────────────── */
+  .part { margin-top: 72px; }
+  .part-head { display: flex; align-items: baseline; gap: 14px; border-bottom: 1.5px solid var(--line); padding-bottom: 12px; margin-bottom: 8px; }
+  .part-num { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 13px; font-weight: 700; color: var(--paper); background: var(--ink); border-radius: 6px; padding: 3px 10px; }
+  .part-head h2 { font-size: 24px; font-weight: 800; letter-spacing: -0.01em; margin: 0; }
+  .part-head p { color: var(--muted); font-size: 13px; margin: 0; }
+
+  /* ── 전략 카드 공통 ─────────────────── */
+  .strat { margin-top: 32px; }
+  .strat h3 { font-size: 17px; font-weight: 800; margin: 0 0 4px; }
+  .strat .sub { color: var(--muted); font-size: 13.5px; margin: 0 0 16px; max-width: 70ch; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 860px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+  .card { background: var(--frame-bg); border: 1.5px solid var(--line); border-radius: 12px; padding: 18px 20px; }
+  .card h4 { margin: 0 0 8px; font-size: 14.5px; font-weight: 800; }
+  .card p { margin: 0; font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+  .card ul { margin: 6px 0 0; padding-left: 18px; font-size: 13.5px; }
+  .card li { margin-bottom: 4px; }
+  .kicker { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 6px; }
+
+  /* 개요 표 */
+  table.plain { width: 100%; border-collapse: collapse; font-size: 13.5px; background: var(--frame-bg); border: 1.5px solid var(--line); border-radius: 12px; overflow: hidden; }
+  table.plain th, table.plain td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  table.plain tr:last-child th, table.plain tr:last-child td { border-bottom: 0; }
+  table.plain th { width: 140px; color: var(--muted); font-weight: 700; background: var(--wf-fill); white-space: nowrap; }
+  .tbl-scroll { overflow-x: auto; border-radius: 12px; }
+
+  /* 섹션 요약표 */
+  table.plain.sum { min-width: 760px; }
+  table.plain.sum th { width: 118px; }
+  table.plain.sum td { font-size: 12.5px; line-height: 1.55; }
+  table.plain.sum .st-tag { display: block; font-size: 10px; font-weight: 800; letter-spacing: .08em; color: var(--accent); text-transform: uppercase; margin-top: 2px; }
+  table.plain.sum .hd td { font-weight: 800; color: var(--ink); background: var(--wf-fill); font-size: 12px; }
+
+  /* 메시지 하우스 */
+  .house { display: flex; flex-direction: column; gap: 10px; }
+  .house-roof { background: var(--ink); color: var(--paper); border-radius: 12px; padding: 18px 22px; text-align: center; }
+  .house-roof .kicker { color: var(--paper); opacity: .65; }
+  .house-roof p { margin: 0; font-size: 19px; font-weight: 800; letter-spacing: -0.01em; }
+  .house-roof span { display: block; font-size: 12.5px; font-weight: 400; opacity: .75; margin-top: 4px; }
+  .house-base { background: var(--wf-fill); border: 1.5px dashed var(--wf-line); border-radius: 10px; padding: 10px 16px; text-align: center; font-size: 12.5px; color: var(--muted); }
+  .pillar-map { font-size: 11.5px; color: var(--accent); font-weight: 700; margin-top: 8px; display: block; }
+
+  /* 전환 스테이지 플로우 */
+  .stages { display: flex; flex-wrap: wrap; gap: 6px; align-items: stretch; }
+  .stage-cell { flex: 1 1 150px; background: var(--frame-bg); border: 1.5px solid var(--line); border-radius: 10px; padding: 10px 12px; min-width: 140px; }
+  .stage-cell .st { font-size: 10.5px; font-weight: 800; letter-spacing: .1em; color: var(--accent); text-transform: uppercase; }
+  .stage-cell .sc { font-size: 12.5px; font-weight: 700; margin: 2px 0; }
+  .stage-cell .sd { font-size: 11.5px; color: var(--muted); line-height: 1.45; }
+
+  /* ── 스토리보드 섹션 ────────────────── */
+  .sb { margin-top: 56px; }
+  .sb-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
+  .sb-num { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 13px; font-weight: 700; color: var(--accent); border: 1.5px solid var(--accent); border-radius: 6px; padding: 2px 8px; }
+  .sb-head h2 { font-size: 21px; font-weight: 800; letter-spacing: -0.01em; margin: 0; }
+  .badge { font-size: 11px; font-weight: 700; letter-spacing: .06em; padding: 3px 10px; border-radius: 999px; }
+  .badge.stage { background: var(--accent-soft); color: var(--accent); }
+  .badge.new { background: var(--good-bg); color: var(--good); }
+  .sb-goal { color: var(--muted); font-size: 14px; margin: 2px 0 6px; max-width: 72ch; }
+  .sb-logic { font-size: 13px; margin: 0 0 20px; color: var(--ink); background: var(--wf-fill); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; padding: 8px 14px; max-width: 72ch; }
+  .sb-logic b { color: var(--accent); }
+
+  .sb-body { display: grid; grid-template-columns: 400px 1fr; gap: 28px; align-items: start; }
+  @media (max-width: 860px) { .sb-body { grid-template-columns: 1fr; } }
+
+  /* ── 와이어프레임 프레임 ─────────────── */
+  .frame { background: var(--frame-bg); border: 1.5px solid var(--wf-line); border-radius: 12px; padding: 22px 18px; display: flex; flex-direction: column; gap: 12px; position: sticky; top: 16px; }
+  @media (max-width: 860px) { .frame { position: static; } }
+  .frame-label { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 11px; color: var(--muted); letter-spacing: .1em; text-align: center; margin-bottom: 2px; }
+  .wf-h { font-size: 17px; font-weight: 800; line-height: 1.4; letter-spacing: -0.01em; text-wrap: balance; margin: 0; }
+  .wf-sub { font-size: 13px; color: var(--muted); margin: 0; line-height: 1.55; }
+  .wf-bar { height: 9px; border-radius: 4px; background: var(--wf-fill2); }
+  .wf-img { border: 1.5px dashed var(--wf-line); border-radius: 8px;
+    background:
+      linear-gradient(to top right, transparent calc(50% - .75px), var(--wf-line) 50%, transparent calc(50% + .75px)),
+      linear-gradient(to bottom right, transparent calc(50% - .75px), var(--wf-line) 50%, transparent calc(50% + .75px)),
+      var(--wf-fill);
+    display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 12px; text-align: center; padding: 8px; }
+  .wf-img span { background: var(--frame-bg); border-radius: 4px; padding: 2px 8px; }
+  .wf-btn { background: var(--ink); color: var(--paper); border-radius: 8px; text-align: center; font-size: 14px; font-weight: 700; padding: 11px 8px; }
+  .wf-card { border: 1.5px solid var(--line); border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 6px; }
+  .wf-card h4 { margin: 0; font-size: 13px; font-weight: 700; }
+  .wf-card p { margin: 0; font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .wf-row { display: flex; gap: 8px; }
+  .wf-row > * { flex: 1; }
+  .wf-chip-row { display: flex; flex-wrap: wrap; gap: 6px; }
+  .wf-chip { font-size: 11px; border: 1px solid var(--line); border-radius: 999px; padding: 3px 9px; color: var(--muted); }
+  .bubble { border-radius: 12px; padding: 9px 12px; font-size: 12.5px; line-height: 1.5; max-width: 88%; }
+  .bubble.user { background: var(--accent); color: var(--accent-ink); align-self: flex-end; border-bottom-right-radius: 3px; }
+  .bubble.ai { background: var(--wf-fill); border: 1px solid var(--line); align-self: flex-start; border-bottom-left-radius: 3px; }
+  .ba { border: 1.5px solid var(--line); border-radius: 8px; overflow: hidden; font-size: 12px; }
+  .ba .ba-before, .ba .ba-after { padding: 9px 12px; }
+  .ba .ba-before { background: var(--wf-fill); color: var(--muted); border-bottom: 1px dashed var(--line); }
+  .ba .ba-after { font-weight: 600; }
+  .ba .tag { font-size: 10px; font-weight: 700; letter-spacing: .08em; margin-right: 6px; }
+  .ba .tag.b { color: var(--muted); }
+  .ba .tag.a { color: var(--good); }
+  .divider { border: 0; border-top: 1px dashed var(--wf-line); margin: 2px 0; }
+
+  /* ── 스펙(4단) ─────────────────────── */
+  .spec { display: flex; flex-direction: column; gap: 16px; }
+  .spec-block { border-left: 3px solid var(--line); padding: 2px 0 2px 16px; }
+  .spec-block.k1 { border-left-color: var(--accent); }
+  .spec-block h3 { font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; }
+  .spec-block.k1 h3 { color: var(--accent); }
+  .spec-block ul { margin: 0; padding-left: 18px; font-size: 14px; }
+  .spec-block li { margin-bottom: 5px; }
+  .spec-block li:last-child { margin-bottom: 0; }
+  .copy { font-weight: 600; }
+  .alt { color: var(--muted); }
+  .alt b { color: var(--ink); font-weight: 700; }
+  .note { color: var(--muted); }
+  .q { color: var(--amber); font-weight: 600; }
+
+  /* ── 콜아웃 ─────────────────────────── */
+  .callout { margin-top: 48px; border: 1.5px solid var(--amber); background: var(--amber-bg); border-radius: 12px; padding: 20px 24px; }
+  .callout h2 { font-size: 16px; margin: 0 0 10px; color: var(--amber); }
+  .callout ol, .callout ul { margin: 0; padding-left: 20px; font-size: 14px; }
+  .callout li { margin-bottom: 6px; }
+
+  .foot { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); }
+</style>
+
+<div class="wrap">
+
+  <header class="doc-head">
+    <p class="doc-eyebrow">GRID.OS — Detail Page Planning Document</p>
+    <h1>그리도스 상세페이지 기획안 v1.2<br>전략 · 스토리보드 · 제작 가이드</h1>
+    <p class="doc-meta">
+      <span>클라이언트 <b>GRID.OS (Grid.A Corp.)</b></span>
+      <span>작성 <b>GRIM Communications</b></span>
+      <span>버전 <b>v1.2 · 2026-08-11</b></span>
+      <span>형태 <b>세로 스크롤 원페이지 상세</b></span>
+    </p>
+    <div class="changelog"><b>v1.1 → v1.2 변경</b> — 섹션 요약표(2-0) 추가: S0–S11 전체를 컴포넌트/내용/비고 한 표로 조망. <span style="opacity:.7">(v1.0→v1.1: 비교표·FAQ 정식 편입 12섹션 확정 · PART 1 전략 신설 · 스펙 4단 확장 · PART 3 제작 가이드 신설)</span></div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════ PART 1 ═══ -->
+  <div class="part">
+    <div class="part-head">
+      <span class="part-num">PART 1</span><h2>전략</h2><p>페이지가 무엇을, 누구에게, 어떤 논리로 설득하는가</p>
+    </div>
+
+    <div class="strat">
+      <h3>1-1. 기획 개요</h3>
+      <div class="tbl-scroll"><table class="plain">
+        <tr><th>페이지 목적</th><td>AI 진입장벽을 느끼는 일반 사용자에게 "그리도스는 배우지 않아도 되는 AI"임을 설득하고, 단일 전환 액션(CTA)으로 유도</td></tr>
+        <tr><th>타겟</th><td>AI를 어려워하거나, AI를 쓰고 있어도 채팅(검색·번역) 수준에 머무는 일반 사용자 — 자영업자·프리랜서·사무직·학생</td></tr>
+        <tr><th>포지셔닝</th><td>"배워서 쓰는 AI 도구"가 아니라 <b>"말만 하면 함께 일하는 AI 팀원"</b> — 학습 비용 0을 전면에</td></tr>
+        <tr><th>핵심 차별점</th><td>① 대화가 흘러가지 않고 폴더 구조로 <b>적층</b>되어 자산이 됨 ② 맥락을 기억해 <b>쓸수록 나를 아는 AI</b> ③ 자동화가 <b>대화 한마디</b>로 만들어짐</td></tr>
+        <tr><th>현행 대비</th><td>grid-os.ai 현행은 B2B(도입 문의) 중심 · 마케팅 대행사 에디션 우선 — 본 기획은 <b>일반 사용자 버전</b>으로 언어·사례·CTA 전면 재설계</td></tr>
+        <tr><th>전환 목표</th><td class="q">확정 필요: 다운로드 / 사전신청(이메일) / 문의 중 택 1 — 이하 CTA 문구는 "그리도스 시작하기"로 가안</td></tr>
+      </table></div>
+    </div>
+
+    <div class="strat">
+      <h3>1-2. 타겟 페르소나</h3>
+      <p class="sub">섹션 카피·후기·FAQ가 모두 아래 세 인물의 언어로 검증되어야 합니다. "이 문장을 이 사람이 이해하는가?"</p>
+      <div class="grid3">
+        <div class="card"><span class="kicker">P1 · AI 무력감형</span><h4>최○호 (46) · 카페 운영</h4>
+          <ul><li>AI 강의를 3개 들었지만 실무 적용 실패</li><li>"나는 컴퓨터랑 안 맞아"라는 자기규정</li><li><b>필요한 말</b>: "문제는 당신이 아니다" (S2) · "카톡하듯 쓰면 된다" (S9 후기)</li></ul></div>
+        <div class="card"><span class="kicker">P2 · 채팅 한계형</span><h4>김○연 (31) · 프리랜서 디자이너</h4>
+          <ul><li>GPT 유료 구독 중 — 그러나 검색·번역·문구 수정만</li><li>매번 처음부터 설명하는 데 지침</li><li><b>필요한 말</b>: "매번 리셋 vs 쌓임" (S4·S8 비교표)</li></ul></div>
+        <div class="card"><span class="kicker">P3 · 정리 포기형</span><h4>이○은 (27) · 대학원생</h4>
+          <ul><li>자료는 많은데 폴더 정리를 포기한 상태</li><li>"어디 뒀는지 못 찾는" 반복 스트레스</li><li><b>필요한 말</b>: "당신이 폴더를 몰라도 알아서" (S4)</li></ul></div>
+      </div>
+    </div>
+
+    <div class="strat">
+      <h3>1-3. 메시지 하우스</h3>
+      <p class="sub">페이지의 모든 카피는 아래 구조 안에서만 작성합니다. 새 메시지를 추가하지 않는 것이 원칙.</p>
+      <div class="house">
+        <div class="house-roof"><span class="kicker">Core Message</span>
+          <p>"AI, 배우지 말고 그냥 시키세요"</p>
+          <span>핵심 약속 — 학습 비용 0 · 첫날부터 실행</span>
+        </div>
+        <div class="grid3">
+          <div class="card"><span class="kicker">Pillar 1</span><h4>도구가 아니라, 함께 일하는 팀원</h4><p>맥락을 기억하고, 연관 업무를 연결하고, 기록을 자산으로 쌓는다. 중요한 실행은 반드시 내 승인.</p><span class="pillar-map">→ S4 체계 · S5 장점1</span></div>
+          <div class="card"><span class="kicker">Pillar 2</span><h4>말하면, 일이 됩니다</h4><p>설정·프롬프트·강의 없이 평소 말투로. 자동화도 대화 한마디로 만들어진다.</p><span class="pillar-map">→ S1 시연 · S3 해결 · S6 장점2</span></div>
+          <div class="card"><span class="kicker">Pillar 3</span><h4>막혀도, 혼자가 아닙니다</h4><p>사용자 커뮤니티와 원클릭 피드백. 질문해도 되는 분위기가 제품의 일부.</p><span class="pillar-map">→ S7 장점3 · S10 FAQ</span></div>
+        </div>
+        <div class="house-base">Foundation (신뢰 기반) — 설치형 · 내 데이터는 내 것 · 승인 기반 실행 · 자동 백업 → 전 섹션의 안심 문구로 반복 노출</div>
+      </div>
+    </div>
+
+    <div class="strat">
+      <h3>1-4. 전환 설계 — 스크롤 심리 흐름</h3>
+      <p class="sub">12개 섹션은 아래 10단계 심리 곡선을 따릅니다. 각 섹션이 끝날 때 독자의 머릿속에 남아야 할 문장을 기준으로 검수합니다.</p>
+      <div class="stages">
+        <div class="stage-cell"><div class="st">Hook</div><div class="sc">S0 히어로</div><div class="sd">"배우지 말라고?"</div></div>
+        <div class="stage-cell"><div class="st">Show</div><div class="sc">S1 시연</div><div class="sd">"진짜 한마디로 되네"</div></div>
+        <div class="stage-cell"><div class="st">Empathy</div><div class="sc">S2 고민</div><div class="sd">"완전 내 얘기다"</div></div>
+        <div class="stage-cell"><div class="st">Relief</div><div class="sc">S3 해결</div><div class="sd">"3단계면 끝이라고?"</div></div>
+        <div class="stage-cell"><div class="st">Logic</div><div class="sc">S4 체계</div><div class="sd">"아, 그래서 되는 거구나"</div></div>
+        <div class="stage-cell"><div class="st">Trust</div><div class="sc">S5–S7 장점</div><div class="sd">"믿을 만하네"</div></div>
+        <div class="stage-cell"><div class="st">Objection</div><div class="sc">S8 비교표</div><div class="sd">"GPT랑 다르구나"</div></div>
+        <div class="stage-cell"><div class="st">Proof</div><div class="sc">S9 후기</div><div class="sd">"나 같은 사람도 쓰네"</div></div>
+        <div class="stage-cell"><div class="st">Assure</div><div class="sc">S10 FAQ</div><div class="sd">"걱정할 게 없네"</div></div>
+        <div class="stage-cell"><div class="st">Act</div><div class="sc">S11 CTA</div><div class="sd">"해보자"</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ PART 2 ═══ -->
+  <div class="part">
+    <div class="part-head">
+      <span class="part-num">PART 2</span><h2>섹션 스토리보드</h2><p>S0–S11 · 컴포넌트 / 내용 / 비주얼·모션 / 기획 노트</p>
+    </div>
+
+    <div class="strat">
+      <h3>2-0. 섹션 요약표 — 한눈에 보기</h3>
+      <p class="sub">12개 섹션 전체를 컴포넌트/내용/비고로 압축한 조망표입니다. 카피 대안·모션 스펙 등 상세는 아래 섹션별 스토리보드 참조.</p>
+      <div class="tbl-scroll"><table class="plain sum">
+        <tr class="hd"><th>섹션</th><td>컴포넌트</td><td>내용 (핵심 카피)</td><td>비고</td></tr>
+        <tr><th>S0 히어로<span class="st-tag">Hook · 주목</span></th>
+          <td>헤드라인+서브 · 시연 루프영상(15초) · CTA 1개 · 신뢰 칩 3</td>
+          <td>"AI, 배우지 말고 그냥 시키세요" — 학습 비용 0 선언</td>
+          <td class="q">CTA 목적지 확정 필요</td></tr>
+        <tr><th>S1 고민+해결<span class="st-tag">Show · 증명</span></th>
+          <td>Before/After 카드 3 · After 실화면 캡처</td>
+          <td>① 엑셀→리포트 자동화 ② 히스토리 즉답 ③ "저번처럼" 반복 실행</td>
+          <td>'광고세팅'은 "반복 세팅"으로 일반화 (예시 처리)</td></tr>
+        <tr><th>S2 소비자 고민<span class="st-tag">Empathy · 공감</span></th>
+          <td>고민 말풍선 4 · 전환 카피 1줄</td>
+          <td>"문제는 당신이 아니라, AI를 '배워야 쓰는 도구'로 만든 방식"</td>
+          <td>말풍선은 추후 실제 VOC로 교체 시 신뢰도↑</td></tr>
+        <tr><th>S3 해결방안<span class="st-tag">Relief · 해소</span></th>
+          <td>스텝 카드 3 · 첫 대화 실화면</td>
+          <td>설치 → 첫 대화(AI가 먼저 질문) → 그냥 말하기</td>
+          <td>'온보딩' 표기 금지 → "첫 대화"로 통일</td></tr>
+        <tr><th>S4 그리도스 체계<span class="st-tag">Logic · 이해</span></th>
+          <td>3단 플로우 다이어그램 · 연결 그래프 시각화</td>
+          <td>"대화는 흘러가지만, 그리도스에는 쌓입니다" · "쓸수록 나를 아는 AI"</td>
+          <td>페이지 대표 모션(그래프 성장) · S8 비교표의 논리 근거</td></tr>
+        <tr><th>S5 장점 1<span class="st-tag">Trust · 신뢰</span></th>
+          <td>특징 카드 3 + 아이콘</td>
+          <td>"도구가 아니라, 함께 일하는 팀원" — AI 파트너/데이터 소유/기록 자산화</td>
+          <td class="q">팀 계정 요소 제외 · 데이터 저장 구조 확인 필요</td></tr>
+        <tr><th>S6 장점 2<span class="st-tag">Trust · 신뢰</span></th>
+          <td>대화 시연 4턴 · 사례 칩 5</td>
+          <td>"말하면, 일이 됩니다" — 자동화 생성도 대화 한마디</td>
+          <td>타이핑 애니메이션 1회 재생 · 대화는 실제 동작과 일치</td></tr>
+        <tr><th>S7 장점 3<span class="st-tag">Trust · 신뢰</span></th>
+          <td>커뮤니티/피드백 2칼럼 카드 · 커뮤니티 캡처</td>
+          <td>"막히면, 혼자 헤매지 않습니다" — 커뮤니티 + 원클릭 피드백</td>
+          <td class="q">피드백 전송 실제 형태 확인 필요</td></tr>
+        <tr><th>S8 비교표<span class="st-tag">Objection · 반론</span></th>
+          <td>3행 비교(AI 채팅 vs 그리도스) · 마무리 카피</td>
+          <td>기억/결과물/반복 대비 — "채팅은 대답하고 끝, 팀원은 일을 끝냅니다"</td>
+          <td>타사 브랜드명 미표기 · 검증 가능한 사실만</td></tr>
+        <tr><th>S9 후기<span class="st-tag">Proof · 증거</span></th>
+          <td>후기 카드 4 (별점·직군·나이대)</td>
+          <td>페르소나 1:1 캐스팅 — 진입장벽/기억/자동화/정리 증언</td>
+          <td class="q">실후기 확보 권장 (가상 후기 시 표시광고법 검토)</td></tr>
+        <tr><th>S10 FAQ<span class="st-tag">Assure · 안심</span></th>
+          <td>아코디언 5문항 (1번 기본 펼침)</td>
+          <td>Q1 "컴퓨터 잘 못하는데" 최상단 · 데이터/승인/AI 계정/가격</td>
+          <td class="q">Q5 가격은 정책 확정 후 · 답변은 3문장 이내</td></tr>
+        <tr><th>S11 CTA<span class="st-tag">Act · 전환</span></th>
+          <td>마무리 헤드라인 · CTA 1개 · 안심 문구 3요소</td>
+          <td>"오늘부터, AI 팀원과 일하세요" · "배우는 데 걸리는 시간: 0분"</td>
+          <td>S0과 동일 문구·목적지 · 스티키 바는 S3부터 노출</td></tr>
+      </table></div>
+    </div>
+  </div>
+
+  <!-- ═══════ S0 ═══════ -->
+  <section class="sb">
+    <div class="sb-head"><span class="sb-num">S0</span><h2>Summary — 히어로</h2><span class="badge stage">HOOK · 주목</span></div>
+    <p class="sb-goal">3초 안에 "이건 나를 위한 AI"를 각인. 기능 나열 대신 '배울 필요 없음'을 선언.</p>
+    <p class="sb-logic"><b>전환 논리</b> — 타겟은 "AI = 배워야 하는 것"이라는 전제를 갖고 진입한다. 그 전제를 첫 문장에서 뒤집어야 스크롤이 시작된다.</p>
+    <div class="sb-body">
+      <div class="frame">
+        <div class="frame-label">WIREFRAME · HERO</div>
+        <p class="wf-h">AI, 배우지 말고<br>그냥 시키세요</p>
+        <p class="wf-sub">설치하고 말만 하면 — 정리·문서·반복 업무를 AI 팀원이 대신하는 나의 업무 OS, 그리도스</p>
+        <div class="wf-img" style="height:120px"><span>제품 실화면: 대화 → 결과물 생성 장면 (15초 루프 영상)</span></div>
+        <div class="wf-btn">그리도스 시작하기</div>
+        <div class="wf-chip-row"><span class="wf-chip">설치형</span><span class="wf-chip">강의 불필요</span><span class="wf-chip">내 데이터는 내 것</span></div>
+      </div>
+      <div class="spec">
+        <div class="spec-block k1"><h3>컴포넌트</h3>
+          <ul><li>메인 헤드라인 + 서브카피</li><li>제품 실화면 루프 영상 1개 (대화 → 결과, 15초 이내·무음 자동재생)</li><li>메인 CTA 버튼 1개 — 보조 버튼 없음 (선택지 최소화)</li><li>신뢰 칩 3개 (Foundation 요소)</li></ul></div>
+        <div class="spec-block"><h3>내용 (카피)</h3>
+          <ul><li class="copy">A안: "AI, 배우지 말고 그냥 시키세요"</li><li class="alt"><b>B안</b>: "당신은 말만 하세요. 일은 그리도스가 합니다"</li><li class="alt"><b>C안</b>: "프롬프트를 몰라도, 폴더를 몰라도"</li><li class="copy">서브: "설치하고 말만 하면 — 정리·문서·반복 업무를 AI 팀원이 대신하는 나의 업무 OS"</li></ul></div>
+        <div class="spec-block"><h3>비주얼 · 모션</h3>
+          <ul><li class="note">영상은 반드시 실화면 녹화 — 합성 목업은 신뢰 하락. 타이핑 → 결과물 생성까지 끊김 없이.</li><li class="note">헤드라인 페이드업 → 영상 재생 → CTA 등장 순의 로드 시퀀스 (1.5초 이내 완료).</li></ul></div>
+        <div class="spec-block"><h3>기획 노트</h3>
+          <ul><li class="note">A안 권장 — 명령형이 타겟의 수동성("나는 못해")을 정면으로 해제.</li><li class="q">CTA 목적지 확정 필요 → 버튼 문구 확정 (1-1 개요 참조).</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ S1 ═══════ -->
+  <section class="sb">
+    <div class="sb-head"><span class="sb-num">S1</span><h2>고민+해결 — Before → After 시연</h2><span class="badge stage">SHOW · 증명</span></div>
+    <p class="sb-goal">추상 설명 전에 '장면'부터. 수작업이 한마디로 끝나는 대비를 3장면으로.</p>
+    <p class="sb-logic"><b>전환 논리</b> — 히어로의 선언은 아직 '주장'이다. 설득 문장을 늘리는 대신 즉시 증거(장면)를 제시해 의심 구간을 최단으로 끊는다.</p>
+    <div class="sb-body">
+      <div class="frame">
+        <div class="frame-label">WIREFRAME · BEFORE/AFTER ×3</div>
+        <p class="wf-h">매일 하던 그 일,<br>이제 한마디면 됩니다</p>
+        <div class="ba"><div class="ba-before"><span class="tag b">BEFORE</span>엑셀 열고 복사·붙여넣기 2시간, 수식 깨져서 다시…</div><div class="ba-after"><span class="tag a">AFTER</span>"이번 달 자료 정리해서 표로 만들어줘" → 리포트 완성</div></div>
+        <div class="ba"><div class="ba-before"><span class="tag b">BEFORE</span>"그때 그 얘기 어디에 적었더라…" 폴더 뒤지기 30분</div><div class="ba-after"><span class="tag a">AFTER</span>"지난번에 뭐라고 결정했지?" → 히스토리에서 바로 답변</div></div>
+        <div class="ba"><div class="ba-before"><span class="tag b">BEFORE</span>매번 같은 세팅을 처음부터 반복 (광고·문서·정산…)</div><div class="ba-after"><span class="tag a">AFTER</span>"저번처럼 세팅해줘" → 이전 방식 그대로 자동 실행</div></div>
+      </div>
+      <div class="spec">
+        <div class="spec-block k1"><h3>컴포넌트</h3>
+          <ul><li>섹션 헤드라인</li><li>Before/After 카드 3개</li><li>각 카드 실화면 캡처 1컷 (After 쪽)</li></ul></div>
+        <div class="spec-block"><h3>내용 (3개 시나리오)</h3>
+          <ul><li class="copy">① 엑셀 수작업 → 리포트 자동화 (P1·P2 공통 통점)</li><li class="copy">② 히스토리 질문 → 이전 기록 기반 즉답 (P2·P3)</li><li class="copy">③ 반복 세팅 → "저번처럼" 자동 실행 (광고세팅은 예시 중 하나로)</li></ul></div>
+        <div class="spec-block"><h3>비주얼 · 모션</h3>
+          <ul><li class="note">Before는 회색·저채도, After는 본색 — 감정의 명암을 색으로.</li><li class="note">스크롤 진입 시 Before 먼저 표시 → 0.4초 후 After 리빌. 모바일 세로 스택.</li></ul></div>
+        <div class="spec-block"><h3>기획 노트</h3>
+          <ul><li class="note">'광고세팅'은 일반 타겟에게 낯선 어휘 — "반복 세팅"으로 일반화하고 괄호 예시 처리.</li><li class="note">시나리오는 페르소나 3명과 1:1 대응하도록 설계됨 (내용 칸 참조).</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ S2 ═══════ -->
+  <section class="sb">
+    <div class="sb-head"><span class="sb-num">S2</span><h2>일반 소비자의 고민 — 공감</h2><span class="badge stage">EMPATHY · 공감</span></div>
+    <p class="sb-goal">"이거 완전 내 얘기"를 만드는 공감 섹션. 타겟이 스스로를 인식하게 한다.</p>
+    <p class="sb-logic"><b>전환 논리</b> — 시연(S1)을 본 직후 "그래도 나는 못 쓸 것 같은데"라는 방어가 올라온다. 그 방어의 언어를 먼저 말해주고, 책임을 사용자에서 '방식'으로 옮긴다.</p>
+    <div class="sb-body">
+      <div class="frame">
+        <div class="frame-label">WIREFRAME · 공감 말풍선</div>
+        <p class="wf-h">혹시, 이런 적 있으신가요?</p>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div class="bubble ai">"AI 강의를 3개나 들었는데, 막상 켜면 뭘 해야 할지 모르겠어요"</div>
+          <div class="bubble ai">"GPT 유료 결제했는데… 결국 검색이랑 번역만 시켜요"</div>
+          <div class="bubble ai">"자동화? 폴더? 터미널? 듣기만 해도 머리가 아파요"</div>
+          <div class="bubble ai">"남들은 AI로 일 줄인다는데, 내 일엔 적용이 안 돼요"</div>
+        </div>
+        <div class="wf-bar" style="width:70%;margin:4px auto 0"></div>
+        <p class="wf-sub" style="text-align:center">문제는 당신이 아니라, <b>AI를 '배워야 쓰는 도구'로 만든 방식</b>입니다</p>
+      </div>
+      <div class="spec">
+        <div class="spec-block k1"><h3>컴포넌트</h3>
+          <ul><li>섹션 헤드라인 (질문형)</li><li>고민 말풍선 4개 (실사용자 어투)</li><li>전환 카피 1줄 — 섹션의 실질적 결론</li></ul></div>
+        <div class="spec-block"><h3>내용 (카피)</h3>
+          <ul><li class="copy">말풍선 4개: 강의 무력감 / 채팅 한계 / 용어 공포 / 적용 실패 — 페르소나 P1·P2·P3의 실제 언어</li><li class="copy">전환: "문제는 당신이 아니라, AI를 '배워야 쓰는 도구'로 만든 방식입니다"</li></ul></div>
+        <div class="spec-block"><h3>비주얼 · 모션</h3>
+          <ul><li class="note">말풍선은 채팅 UI 톤 — "채팅만 하는 유저"가 자기 화면처럼 느끼게.</li><li class="note">스크롤 시 말풍선 순차 등장(0.15초 간격) → 전환 카피는 여백을 두고 단독 등장.</li></ul></div>
+        <div class="spec-block"><h3>기획 노트</h3>
+          <ul><li class="note">전환 카피가 이 섹션의 전부 — 자책 해소가 되어야 S3의 해법이 '내 것'으로 들린다.</li><li class="note">말풍선 문구는 추후 실제 VOC·커뮤니티 질문에서 발췌해 교체하면 신뢰도 상승.</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ S3 ═══════ -->
+  <section class="sb">
+    <div class="sb-head"><span class="sb-num">S3</span><h2>해결방안 — 설치 → 첫 대화 → 실행</h2><span class="badge stage">RELIEF · 해소</span></div>
+    <p class="sb-goal">"강의 없이 3단계면 끝"이라는 낮은 진입장벽을 프로세스로 증명.</p>
+    <p class="sb-logic"><b>전환 논리</b> — 공감으로 열린 마음에 '구체적이고 짧은 절차'를 제시. 단계가 3개를 넘거나 용어가 어려우면 S2에서 만든 신뢰가 즉시 붕괴된다.</p>
+    <div class="sb-body">
+      <div class="frame">
+        <div class="frame-label">WIREFRAME · 3-STEP</div>
+        <p class="wf-h">어려운 강의는 필요 없습니다</p>
+        <div class="wf-card"><h4>STEP 1 · 설치</h4><p>내 컴퓨터에 그리도스를 설치합니다. 복잡한 세팅 없음.</p></div>
+        <div class="wf-card"><h4>STEP 2 · 첫 대화</h4><p>AI가 먼저 물어봅니다 — "어떤 일을 하세요?" 대답만 하면 내 업무에 맞게 준비 완료.</p></div>
+        <div class="wf-card"><h4>STEP 3 · 그냥 말하기</h4><p>"이것 좀 정리해줘" — 첫날부터 바로 일이 됩니다.</p></div>
+        <div class="wf-img" style="height:70px"><span>첫 대화(온보딩) 실화면 캡처</span></div>
+      </div>
+      <div class="spec">
+        <div class="spec-block k1"><h3>컴포넌트</h3>
+          <ul><li>섹션 헤드라인</li><li>스텝 카드 3개 (번호·제목·설명)</li><li>첫 대화 실화면 1컷</li></ul></div>
+        <div class="spec-block"><h3>내용 (카피)</h3>
+          <ul><li class="copy">"어려운 강의는 필요 없습니다. 설치하고, 대답하고, 말하세요."</li><li class="copy">STEP 2 핵심: "AI가 먼저 물어봅니다" — 사용자가 배우는 게 아니라 <b>AI가 사용자를 배운다</b>는 관점 전환.</li></ul></div>
+        <div class="spec-block"><h3>비주얼 · 모션</h3>
+          <ul><li class="note">스텝 카드는 세로 진행 + 연결선 — 순서가 정보이므로 번호 마커 사용 (이 페이지에서 번호는 S3에만).</li><li class="note">STEP 2 캡처에는 AI의 질문 말풍선이 보이도록 — "AI가 먼저 묻는다"의 시각 증거.</li></ul></div>
+        <div class="spec-block"><h3>기획 노트</h3>
+          <ul><li class="note">'온보딩'이라는 단어 자체가 타겟에게 장벽 — 화면 표기는 <b>"첫 대화"</b>로 통일.</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ S4 ═══════ -->
+  <section class="sb">
+    <div class="sb-head"><span class="sb-num">S4</span><h2>그리도스 체계 — 맥락 연결 + 폴더 적층</h2><span class="badge stage">LOGIC · 이해</span></div>
+    <p class="sb-goal">"왜 그리도스는 되는가"의 원리를 다이어그램 하나로. 채팅형 AI와의 구조적 차이.</p>
+    <p class="sb-logic"><b>전환 논리</b> — 여기까지 온 독자는 "그럴듯한데, 원리가 뭐지?"라는 합리화 근거를 찾는다. 원리를 이해한 사용자는 이탈률이 급감한다 — 단, 설명은 은유로.</p>
+    <div class="sb-body">
+      <div class="frame">
+        <div class="frame-label">WIREFRAME · 다이어그램</div>
+        <p class="wf-h">대화는 흘러가지만,<br>그리도스에는 쌓입니다</p>
+        <div class="wf-card"><h4>① 말하면</h4><p>"거래처 미팅 내용 정리해줘"</p></div>
+        <div style="text-align:center;color:var(--muted);font-size:12px">↓ AI가 맥락 파악</div>
+        <div class="wf-card"><h4>② 연결하고</h4><p>지난 미팅 기록·관련 문서·할 일을 알아서 연결</p></div>
+        <div style="text-align:center;color:var(--muted);font-size:12px">↓ 폴더로 적층</div>
+        <div class="wf-card"><h4>③ 쌓입니다</h4><p>내가 폴더를 몰라도, 업무별로 정리된 구조가 자동 생성</p></div>
+        <div class="wf-img" style="height:64px"><span>연결 그래프/폴더 트리 시각화 (실화면)</span></div>
+        <p class="wf-sub" style="text-align:center"><b>쓸수록 나를 아는 AI</b> — 어제의 대화가 오늘의 자산이 됩니다</p>
+      </div>
+      <div class="spec">
+        <div class="spec-block k1"><h3>컴포넌트</h3>
+          <ul><li>섹션 헤드라인</li><li>3단 플로우 다이어그램 (말하면 → 연결 → 적층)</li><li>연결 그래프/폴더 트리 실화면 1컷</li><li>마무리 카피 1줄</li></ul></div>
+        <div class="spec-block"><h3>내용 (카피)</h3>
+          <ul><li class="copy">"대화는 흘러가지만, 그리도스에는 쌓입니다"</li><li class="copy">"AI가 맥락을 파악해 연관 업무끼리 연결하고, 폴더 구조로 알아서 쌓아둡니다 — 당신이 폴더를 몰라도"</li><li class="copy">"쓸수록 나를 아는 AI"</li></ul></div>
+        <div class="spec-block"><h3>비주얼 · 모션</h3>
+          <ul><li class="note">그래프 시각화는 노드가 연결되며 자라나는 애니메이션 — '축적'을 몸으로 느끼게 하는 이 페이지의 대표 모션.</li><li class="note">파일 아이콘·디렉토리 트리 같은 기술적 표현 대신 '서랍에 정리되는' 은유적 표현 검토.</li></ul></div>
+        <div class="spec-block"><h3>기획 노트</h3>
+          <ul><li class="note">이 섹션이 일반 채팅 AI와의 <b>결정적 차별점</b> — S8 비교표의 논리 근거가 여기서 심어진다.</li><li class="note">"폴더" 강조는 양날 — 타겟이 폴더를 어려워하므로 <b>"당신이 몰라도 알아서"</b> 프레임 필수. S2의 "폴더? 터미널?" 고민과 직접 호응.</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ S5 ═══════ -->
+  <section class="sb">
+    <div class="sb-head"><span class="sb-num">S5</span><h2>장점 1 — 도구가 아니라, 함께 일하는 팀원</h2><span class="badge stage">TRUST · 신뢰</span></div>
+    <p class="sb-goal">현행 홈페이지의 핵심 포지셔닝을 일반 사용자 언어로 이식.</p>
+    <p class="sb-logic"><b>전환 논리</b> — 원리(S4)를 이해한 독자에게 제품의 '태도'를 각인. Pillar 1의 본진. "승인 없이 실행하지 않음"으로 AI 불안감도 함께 해소.</p>
+    <div class="sb-body">
+      <div class="frame">
+        <div class="frame-label">WIREFRAME · 특징 카드</div>
+        <p class="wf-h">도구가 아니라,<br>함께 일하는 팀원입니다</p>
+        <div class="wf-card"><h4>말하면 일하는 AI 파트너</h4><p>문서를 만들고, 데이터를 정리하고, 반복 업무를 실행합니다. 중요한 실행은 반드시 내 승인을 거칩니다.</p></div>
+        <div class="wf-card"><h4>데이터는 당신의 것</h4><p>모든 기록은 내 컴퓨터에만. 그리도스는 데이터를 가져가지 않습니다.</p></div>
+        <div class="wf-card"><h4>기록이 쌓여 자산이 됩니다</h4><p>흘러가던 메모·회의·업무 이력이 연결된 기록으로 남습니다.</p></div>
+      </div>
+      <div class="spec">
+        <div class="spec-block k1"><h3>컴포넌트</h3>
+          <ul><li>섹션 헤드라인 (현행 카피 유지)</li><li>특징 카드 3개 + 아이콘</li></ul></div>
+        <div class="spec-block"><h3>내용 (카피)</h3>
+          <ul><li class="copy">현행 "Why GRID.OS" 4개 특징 중 일반 사용자용 3개로 압축: AI 파트너 / 데이터 소유 / 기록 자산화</li><li class="note">"함께 쓰는 업무 공간(팀 계정)"은 B2B 요소 — 개인 버전에서 제외.</li></ul></div>
+        <div class="spec-block"><h3>비주얼 · 모션</h3>
+          <ul><li class="note">아이콘은 로봇·회로 금지 — 사람·손·서랍 등 일상 오브젝트 계열로 (톤앤매너 3-1 참조).</li></ul></div>
+        <div class="spec-block"><h3>기획 노트</h3>
+          <ul><li class="q">개인 버전도 '내 컴퓨터에만 저장' 구조인지 확인 필요 (현행 퍼스널은 모바일 메모 연동 구조가 있었음 — 데이터 위치 표현이 달라질 수 있음).</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ S6 ═══════ -->
+  <section class="sb">
+    <div class="sb-head"><span class="sb-num">S6</span><h2>장점 2 — 말하면, 일이 됩니다</h2><span class="badge stage">TRUST · 신뢰</span></div>
+    <p class="sb-goal">'배울 필요 없음'을 실제 대화 장면으로 증명. 페이지에서 가장 구체적인 섹션.</p>
+    <p class="sb-logic"><b>전환 논리</b> — Pillar 2의 본진. 대화 마지막 턴("매주 자동으로 해줘")에서 <b>자동화 생성이 곧 대화</b>임을 보여주면 S0의 약속이 완결된다.</p>
+    <div class="sb-body">
+      <div class="frame">
+        <div class="frame-label">WIREFRAME · 대화 시연</div>
+        <p class="wf-h">말하면, 일이 됩니다</p>
+        <p class="wf-sub">복잡한 설정 없이, 평소 말하듯 시키면 됩니다</p>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div class="bubble user">이번 달 지출 내역 정리해서 표로 만들어줘</div>
+          <div class="bubble ai">이번 달 지출 24건을 항목별로 정리했어요. 지난달보다 식비가 12% 늘었네요. 📊 표 보기</div>
+          <div class="bubble user">매주 월요일마다 자동으로 해줘</div>
+          <div class="bubble ai">매주 월요일 아침, 주간 지출 정리를 자동으로 만들어둘게요. ✅</div>
+        </div>
+        <hr class="divider">
+        <div class="wf-chip-row"><span class="wf-chip">회의 → 할 일 정리</span><span class="wf-chip">메모 자동 분류</span><span class="wf-chip">주간 리포트</span><span class="wf-chip">자료 취합</span><span class="wf-chip">반복 업무 자동화</span></div>
+      </div>
+      <div class="spec">
+        <div class="spec-block k1"><h3>컴포넌트</h3>
+          <ul><li>섹션 헤드라인 (현행 카피 유지)</li><li>실대화 시연 UI (사용자 ↔ AI 4턴)</li><li>사용 사례 칩 5개</li></ul></div>
+        <div class="spec-block"><h3>내용 (카피)</h3>
+          <ul><li class="copy">"말하면, 일이 됩니다 — 복잡한 설정 없이 평소 말하듯 시키면 됩니다" (현행 유지)</li><li class="copy">대화 소재는 일반 사용자 공통분모(지출 정리)로 — 특정 직군 편향 방지.</li></ul></div>
+        <div class="spec-block"><h3>비주얼 · 모션</h3>
+          <ul><li class="note">타이핑 애니메이션으로 대화 실시간 진행 연출 — 뷰포트 진입 시 1회 재생, reduced-motion 시 정적 표시.</li><li class="note">사례 칩 탭/클릭 시 해당 대화 예시로 교체되는 인터랙션 검토 (개발 여력에 따라 선택).</li></ul></div>
+        <div class="spec-block"><h3>기획 노트</h3>
+          <ul><li class="note">사례 칩 5개는 현행 How it Works의 일반 사용자 언어 치환판.</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ S7 ═══════ -->
+  <section class="sb">
+    <div class="sb-head"><span class="sb-num">S7</span><h2>장점 3 — 막히면, 혼자 헤매지 않습니다</h2><span class="badge stage">TRUST · 신뢰</span></div>
+    <p class="sb-goal">"어려우면 어쩌지"라는 마지막 불안을 커뮤니티 + 피드백 채널로 해소.</p>
+    <p class="sb-logic"><b>전환 논리</b> — Pillar 3의 본진. 타겟은 '살 때'보다 '막혔을 때'를 두려워한다. 구매 후 지원의 존재가 구매 전 결심을 만든다.</p>
+    <div class="sb-body">
+      <div class="frame">
+        <div class="frame-label">WIREFRAME · 커뮤니티/피드백</div>
+        <p class="wf-h">막히면, 혼자 헤매지 않습니다</p>
+        <div class="wf-row">
+          <div class="wf-card"><h4>💬 사용자 커뮤니티</h4><p>먼저 쓰는 사람들이 활용법과 노하우를 나눕니다. "이럴 땐 이렇게 시켜보세요" — 읽기는 누구나.</p></div>
+          <div class="wf-card"><h4>📨 원클릭 피드백</h4><p>쓰다가 막히면 앱 안에서 바로 전송. 만든 팀이 직접 확인하고 답합니다.</p></div>
+        </div>
+        <div class="wf-img" style="height:64px"><span>커뮤니티 실화면 캡처 (왕초보 질문 + 친절 답변 글)</span></div>
+      </div>
+      <div class="spec">
+        <div class="spec-block k1"><h3>컴포넌트</h3>
+          <ul><li>섹션 헤드라인</li><li>2칼럼 카드: 커뮤니티 / 피드백 전송</li><li>커뮤니티 실화면 1컷</li></ul></div>
+        <div class="spec-block"><h3>내용 (카피)</h3>
+          <ul><li class="copy">"막히면, 혼자 헤매지 않습니다"</li><li class="copy">커뮤니티: "먼저 쓰는 사람들의 커뮤니티" (현행 카피 재사용)</li><li class="copy">피드백: "앱에서 바로 보내면, 만든 사람이 직접 답합니다"</li></ul></div>
+        <div class="spec-block"><h3>비주얼 · 모션</h3>
+          <ul><li class="note">커뮤니티 캡처는 반드시 <b>왕초보 질문 + 친절한 답변</b> 글로 선별 — "질문해도 되는 분위기"의 시각 증거.</li></ul></div>
+        <div class="spec-block"><h3>기획 노트</h3>
+          <ul><li class="q">피드백 전송의 실제 형태(앱 내 버튼? 이메일?) 확인 필요 — 카피의 "앱에서 바로"가 사실이어야 함.</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ S8 ═══════ -->
+  <section class="sb">
+    <div class="sb-head"><span class="sb-num">S8</span><h2>비교표 — 그냥 AI 채팅 vs 그리도스</h2><span class="badge stage">OBJECTION · 반론 해소</span><span class="badge new">v1.1 정식 편입</span></div>
+    <p class="sb-goal">"이미 GPT 쓰는데 왜 또?"라는 핵심 반론에 정면 대응 + 장점 3개를 한 번에 요약.</p>
+    <p class="sb-logic"><b>전환 논리</b> — P2(채팅 한계형)의 결정 관문. S4에서 심은 "리셋 vs 축적" 논리를 표 형식으로 회수한다. 장점 열람이 끝난 직후, 후기 직전이 최적 위치.</p>
+    <div class="sb-body">
+      <div class="frame">
+        <div class="frame-label">WIREFRAME · 3행 비교</div>
+        <p class="wf-h">이미 AI 쓰고 계시다고요?</p>
+        <div class="ba"><div class="ba-before"><span class="tag b">AI 채팅</span>매번 처음부터 설명해야 함</div><div class="ba-after"><span class="tag a">그리도스</span>내 업무·기록을 이미 알고 있음</div></div>
+        <div class="ba"><div class="ba-before"><span class="tag b">AI 채팅</span>답변을 받으면 끝 — 복사·정리는 내 몫</div><div class="ba-after"><span class="tag a">그리도스</span>결과물이 파일·폴더로 알아서 저장</div></div>
+        <div class="ba"><div class="ba-before"><span class="tag b">AI 채팅</span>반복 업무는 매번 다시 시켜야 함</div><div class="ba-after"><span class="tag a">그리도스</span>한 번 시키면 자동으로 반복 실행</div></div>
+        <p class="wf-sub" style="text-align:center">채팅은 대답하고 끝나지만, <b>팀원은 일을 끝냅니다</b></p>
+      </div>
+      <div class="spec">
+        <div class="spec-block k1"><h3>컴포넌트</h3>
+          <ul><li>헤드라인 (질문형)</li><li>3행 비교 (채팅 vs 그리도스)</li><li>마무리 카피 1줄</li></ul></div>
+        <div class="spec-block"><h3>내용 (카피)</h3>
+          <ul><li class="copy">3행: 기억(리셋 vs 축적) / 결과물(대답 vs 저장) / 반복(매번 vs 자동)</li><li class="copy">마무리: "채팅은 대답하고 끝나지만, 팀원은 일을 끝냅니다" — Pillar 1·2를 한 문장으로 회수</li></ul></div>
+        <div class="spec-block"><h3>비주얼 · 모션</h3>
+          <ul><li class="note">좌(회색·저채도) vs 우(본색) — S1과 동일한 색 문법으로 페이지 전체의 시각 언어 통일.</li></ul></div>
+        <div class="spec-block"><h3>기획 노트</h3>
+          <ul><li class="note">타사 브랜드명 직접 표기 금지 — "일반 AI 채팅"으로 통칭 (비교광고 리스크 회피).</li><li class="note">비교 항목은 검증 가능한 사실 위주로 — 성능·품질 우열 표현("더 똑똑함" 등)은 배제.</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ S9 ═══════ -->
+  <section class="sb">
+    <div class="sb-head"><span class="sb-num">S9</span><h2>후기</h2><span class="badge stage">PROOF · 사회적 증거</span></div>
+    <p class="sb-goal">"나 같은 사람도 쓰는구나"의 사회적 증거. 직군·연령을 페르소나에 맞춰 배치.</p>
+    <p class="sb-logic"><b>전환 논리</b> — 논리 설득(S8)이 끝난 자리에 감정 확신을 얹는다. 후기 인물 = 페르소나 — 독자가 자기와 같은 사람을 발견하게 하는 캐스팅이 핵심.</p>
+    <div class="sb-body">
+      <div class="frame">
+        <div class="frame-label">WIREFRAME · 후기 카드</div>
+        <p class="wf-h">이미 이렇게 쓰고 있습니다</p>
+        <div class="wf-card"><h4>★★★★★ 최○호 · 카페 운영 (46)</h4><p>"AI 강의 3개 듣고 포기했던 사람입니다. 이건 그냥 카톡하듯 쓰면 돼요. 매주 재고 정리를 그리도스가 합니다."</p></div>
+        <div class="wf-card"><h4>★★★★★ 김○연 · 프리랜서 디자이너 (31)</h4><p>"GPT는 물어보는 것만 했는데, 그리도스는 제 견적서 양식을 기억하고 알아서 만들어줘요."</p></div>
+        <div class="wf-card"><h4>★★★★★ 박○준 · 쇼핑몰 운영 (38)</h4><p>"주말마다 반나절 걸리던 판매 정리가 '지난주 정리해줘' 한마디로 끝납니다."</p></div>
+        <div class="wf-card"><h4>★★★★★ 이○은 · 대학원생 (27)</h4><p>"자료가 폴더로 알아서 정리되는 게 제일 신기해요. 어디 뒀는지 이제 안 찾아요."</p></div>
+      </div>
+      <div class="spec">
+        <div class="spec-block k1"><h3>컴포넌트</h3>
+          <ul><li>섹션 헤드라인</li><li>후기 카드 4개 (별점·이름·직군·나이대)</li></ul></div>
+        <div class="spec-block"><h3>내용 (캐스팅 설계)</h3>
+          <ul><li class="copy">① P1 카페 사장 → 진입장벽 해소 증언 (S3 호응) — 타겟 대표 인물이므로 맨 앞</li><li class="copy">② P2 디자이너 → 기억·맥락 증언 (S4·S8 호응)</li><li class="copy">③ 쇼핑몰 운영 → 자동화 증언 (S6 호응)</li><li class="copy">④ P3 대학원생 → 폴더 정리 증언 (S4 호응)</li></ul></div>
+        <div class="spec-block"><h3>비주얼 · 모션</h3>
+          <ul><li class="note">증명사진형 인물 이미지 금지(가상 인물 리스크) — 이니셜 아바타 or 무인물 처리.</li></ul></div>
+        <div class="spec-block"><h3>기획 노트</h3>
+          <ul><li class="q">가상 후기 게재 시 표기 방식 검토 필수 — 광고 집행 시 표시광고법 이슈. 베타 테스터·체험단 실후기로 교체가 최선.</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ S10 ═══════ -->
+  <section class="sb">
+    <div class="sb-head"><span class="sb-num">S10</span><h2>FAQ — 마지막 불안 해소</h2><span class="badge stage">ASSURE · 안심</span><span class="badge new">v1.1 정식 편입</span></div>
+    <p class="sb-goal">전환 직전의 망설임 제거. 이탈 방지 마지막 관문.</p>
+    <p class="sb-logic"><b>전환 논리</b> — CTA 직전, 독자의 머릿속에 남은 질문을 선제 답변으로 비운다. 1번 질문은 반드시 타겟의 최종 불안("컴퓨터 잘 못하는데")이어야 한다.</p>
+    <div class="sb-body">
+      <div class="frame">
+        <div class="frame-label">WIREFRAME · 아코디언 (1번 펼침)</div>
+        <p class="wf-h">자주 묻는 질문</p>
+        <div class="wf-card"><h4>Q. 컴퓨터를 잘 못하는데 쓸 수 있나요? ▴</h4><p>네. 그리도스는 '배워서 쓰는' 프로그램이 아닙니다. 설치 후 첫 대화에서 AI가 먼저 물어보고, 이후엔 평소 말하듯 시키면 됩니다.</p></div>
+        <div class="wf-card"><h4>Q. 제 데이터는 안전한가요? ▾</h4></div>
+        <div class="wf-card"><h4>Q. AI가 마음대로 뭔가 실행하나요? ▾</h4></div>
+        <div class="wf-card"><h4>Q. 쓰던 AI 계정(GPT·Claude)이 있어야 하나요? ▾</h4></div>
+        <div class="wf-card"><h4>Q. 가격은 어떻게 되나요? ▾</h4></div>
+      </div>
+      <div class="spec">
+        <div class="spec-block k1"><h3>컴포넌트</h3>
+          <ul><li>아코디언 5문항 — 1번은 기본 펼침 상태</li></ul></div>
+        <div class="spec-block"><h3>내용 (답변 방향)</h3>
+          <ul><li class="copy">Q1 진입장벽 → "배워서 쓰는 프로그램이 아님" + 첫 대화 구조 재강조</li><li class="copy">Q2 데이터 → "내 저장 공간에만, 가져가지 않음 + 자동 백업" (현행 FAQ 재사용)</li><li class="copy">Q3 AI 폭주 불안 → "초안·제안까지만, 실행은 반드시 승인" (현행 FAQ 재사용)</li><li class="copy">Q4 AI 계정 → 연결 구조·추가 구독료 여부 안내</li><li class="q">Q5 가격 → 정책 확정 후 작성</li></ul></div>
+        <div class="spec-block"><h3>비주얼 · 모션</h3>
+          <ul><li class="note">아코디언 개폐 애니메이션은 0.2초 이내 — FAQ에서 화려한 모션은 신뢰를 깎는다.</li></ul></div>
+        <div class="spec-block"><h3>기획 노트</h3>
+          <ul><li class="note">각 답변은 3문장 이내 — 길어지면 새 불안을 만든다.</li><li class="note">FAQ 문항별 열림 이벤트를 측정해 실제 불안 순위 파악 → 추후 문항 순서 최적화 (3-2 측정 설계 참조).</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ S11 ═══════ -->
+  <section class="sb">
+    <div class="sb-head"><span class="sb-num">S11</span><h2>CTA — 마무리 전환</h2><span class="badge stage">ACT · 전환</span></div>
+    <p class="sb-goal">감정이 최고점일 때 단일 행동으로 수렴. 선택지는 하나만.</p>
+    <p class="sb-logic"><b>전환 논리</b> — S0과 동일 문구·동일 목적지의 CTA로 회귀 — 페이지 전체가 하나의 버튼으로 기억되게 한다. 서브카피는 핵심 약속(학습 비용 0)의 마지막 반복.</p>
+    <div class="sb-body">
+      <div class="frame">
+        <div class="frame-label">WIREFRAME · FINAL CTA</div>
+        <p class="wf-h" style="text-align:center">오늘부터,<br>AI 팀원과 일하세요</p>
+        <p class="wf-sub" style="text-align:center">배우는 데 걸리는 시간: 0분</p>
+        <div class="wf-btn">그리도스 시작하기</div>
+        <p class="wf-sub" style="text-align:center;font-size:11px">설치형 · 내 데이터는 내 컴퓨터에 · 막히면 커뮤니티가 함께</p>
+      </div>
+      <div class="spec">
+        <div class="spec-block k1"><h3>컴포넌트</h3>
+          <ul><li>마무리 헤드라인 + 서브 1줄</li><li>CTA 버튼 1개 (S0과 동일 문구·목적지)</li><li>안심 문구 3요소 (Foundation 최종 반복)</li></ul></div>
+        <div class="spec-block"><h3>내용 (카피)</h3>
+          <ul><li class="copy">"오늘부터, AI 팀원과 일하세요"</li><li class="copy">서브: "배우는 데 걸리는 시간: 0분"</li><li class="note">현행 B2B "팀에 AI를 채용하세요"의 개인 시점 변환.</li></ul></div>
+        <div class="spec-block"><h3>비주얼 · 모션</h3>
+          <ul><li class="note">S3 통과 시점부터 하단 스티키 CTA 바 노출(모바일) — 최종 CTA 도달 전 이탈 회수 장치.</li><li class="note">스티키 바는 S11 도달 시 자동 숨김 (CTA 중복 노출 방지).</li></ul></div>
+        <div class="spec-block"><h3>기획 노트</h3>
+          <ul><li class="note">CTA 위치는 총 3곳 — S0(히어로) / 스티키 바 / S11(최종). 문구는 전부 동일.</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ PART 3 ═══ -->
+  <div class="part">
+    <div class="part-head">
+      <span class="part-num">PART 3</span><h2>제작 가이드</h2><p>톤앤매너 · 측정 설계 · 필요 에셋</p>
+    </div>
+
+    <div class="strat">
+      <h3>3-1. 톤앤매너</h3>
+      <div class="grid2">
+        <div class="card"><span class="kicker">언어</span><h4>말하듯 쓰는 해요체 — 용어 치환 원칙</h4>
+          <ul>
+            <li>온보딩 → <b>첫 대화</b> / 프롬프트 → <b>말하기</b> / 워크플로·자동화 파이프라인 → <b>반복 업무</b> / 인덱싱·아카이빙 → <b>쌓기·정리</b></li>
+            <li>영문 용어는 서비스명 외 사용 금지 — 타겟의 용어 공포(S2)가 페이지 안에서 재현되면 안 됨</li>
+            <li>모든 카피는 페르소나 3인 낭독 테스트: "이 문장을 P1이 이해하는가?"</li>
+          </ul></div>
+        <div class="card"><span class="kicker">비주얼</span><h4>실화면 중심 · 일상 오브젝트</h4>
+          <ul>
+            <li>제품 증거는 전부 <b>실화면 녹화/캡처</b> — 합성 목업·과장 그래픽 금지</li>
+            <li>아이콘·일러스트에서 로봇·회로·매트릭스류 금지 — '어려운 기술' 인상을 강화함</li>
+            <li>Before(회색·저채도) vs After(본색)의 색 문법을 S1·S8에서 일관 적용</li>
+            <li>모션은 섹션당 1개 핵심 연출만 — 대표 모션은 S4 그래프 성장 애니메이션</li>
+          </ul></div>
+      </div>
+    </div>
+
+    <div class="strat">
+      <h3>3-2. 측정 설계 (GA4 이벤트)</h3>
+      <p class="sub">런칭 후 섹션별 설득력을 데이터로 검증하기 위한 최소 이벤트 셋. 상세페이지는 '만들고 끝'이 아니라 이탈 지점을 보고 고치는 대상입니다.</p>
+      <div class="tbl-scroll"><table class="plain">
+        <tr><th>이벤트</th><td><b>파라미터</b></td><td><b>판단 용도</b></td></tr>
+        <tr><th>scroll_depth</th><td>25 / 50 / 75 / 100%</td><td>어느 스테이지에서 이탈하는가 — 50% 미만 이탈 과다 시 S2~S4 재검토</td></tr>
+        <tr><th>section_view</th><td>section_id (S0~S11)</td><td>섹션별 도달률 — 비교표(S8)·후기(S9) 도달률이 전환의 선행 지표</td></tr>
+        <tr><th>cta_click</th><td>position (hero / sticky / final)</td><td>어떤 감정 지점에서 전환되는가 — hero 비중이 높으면 페이지 축약 검토</td></tr>
+        <tr><th>faq_open</th><td>question_id (Q1~Q5)</td><td>실제 불안 순위 파악 → 문항 순서·본문 카피 보강</td></tr>
+        <tr><th>video_play / complete</th><td>video_id (hero / S6)</td><td>시연 영상의 후킹력 — 완주율 낮으면 15초 초과 여부 점검</td></tr>
+      </table></div>
+    </div>
+
+    <div class="strat">
+      <h3>3-3. 필요 에셋 체크리스트</h3>
+      <div class="tbl-scroll"><table class="plain">
+        <tr><th>에셋</th><td><b>사용 위치</b></td><td><b>형태 · 요건</b></td></tr>
+        <tr><th>대화→결과 시연 영상</th><td>S0 히어로</td><td>실화면 녹화 15초 루프 · 무음 자동재생 · 모바일 세로 크롭 별도</td></tr>
+        <tr><th>After 실화면 캡처 3컷</th><td>S1</td><td>리포트 완성 / 히스토리 답변 / 반복 실행 각 1컷</td></tr>
+        <tr><th>첫 대화 화면 캡처</th><td>S3</td><td>AI가 먼저 질문하는 장면이 보이도록</td></tr>
+        <tr><th>연결 그래프/폴더 시각화</th><td>S4</td><td>실화면 기반 + 성장 애니메이션 (페이지 대표 모션)</td></tr>
+        <tr><th>대화 시연 스크립트</th><td>S6</td><td>지출 정리 4턴 — 실제 제품 동작과 일치해야 함</td></tr>
+        <tr><th>커뮤니티 캡처</th><td>S7</td><td>왕초보 질문 + 친절 답변 글 선별</td></tr>
+        <tr><th>특징 아이콘 세트</th><td>S5·S7</td><td>일상 오브젝트 계열 5종 (로봇·회로 금지)</td></tr>
+        <tr><th>후기 4건</th><td>S9</td><td class="q">베타/체험단 실후기 확보 권장 — 가상 후기 시 표기 검토</td></tr>
+      </table></div>
+    </div>
+
+    <div class="callout">
+      <h2>⚠️ 제작 착수 전 확정 필요 (열린 질문)</h2>
+      <ol>
+        <li><b>CTA 목적지</b> — 다운로드 / 사전신청(이메일) / 문의 중 택 1. 버튼 문구·FAQ Q5·측정 설계가 모두 여기 종속.</li>
+        <li><b>가격 정책</b> — 무료+내 AI 계정 연결(퍼스널 방식) vs 구독형. FAQ Q4·Q5 답변 확정용.</li>
+        <li><b>실화면 제공 범위</b> — 에셋 체크리스트(3-3)의 8종 중 제작 가능 항목 확인. 시연 영상이 최우선.</li>
+        <li><b>후기 소스</b> — 베타 테스터 실후기 확보 가능 여부. 불가 시 가상 후기 표기 방식 결정.</li>
+        <li><b>데이터 저장 구조</b> — 개인 버전도 '내 컴퓨터에만'인지 (S5·FAQ Q2 카피 확정용).</li>
+      </ol>
+    </div>
+  </div>
+
+  <footer class="foot">
+    GRID.OS 상세페이지 기획안 v1.2 · GRIM Communications · 2026-08-11 · PART 1 전략 — PART 2 스토리보드(요약표 + S0–S11) — PART 3 제작 가이드 · 확정 후 실제 상세페이지 제작 착수
+  </footer>
+
+</div>
+
+</html>
