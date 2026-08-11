@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex">
-<title>그리도스 상세페이지 기획안 v1.2</title>
+<title>그리도스 상세페이지 기획안 v1.3</title>
 <style>
   :root {
     --paper: #F7F6F2;
@@ -184,14 +178,14 @@
 
   <header class="doc-head">
     <p class="doc-eyebrow">GRID.OS — Detail Page Planning Document</p>
-    <h1>그리도스 상세페이지 기획안 v1.2<br>전략 · 스토리보드 · 제작 가이드</h1>
+    <h1>그리도스 상세페이지 기획안 v1.3<br>전략 · 스토리보드 · 제작 가이드</h1>
     <p class="doc-meta">
       <span>클라이언트 <b>GRID.OS (Grid.A Corp.)</b></span>
       <span>작성 <b>GRIM Communications</b></span>
-      <span>버전 <b>v1.2 · 2026-08-11</b></span>
+      <span>버전 <b>v1.3 · 2026-08-11</b></span>
       <span>형태 <b>세로 스크롤 원페이지 상세</b></span>
     </p>
-    <div class="changelog"><b>v1.1 → v1.2 변경</b> — 섹션 요약표(2-0) 추가: S0–S11 전체를 컴포넌트/내용/비고 한 표로 조망. <span style="opacity:.7">(v1.0→v1.1: 비교표·FAQ 정식 편입 12섹션 확정 · PART 1 전략 신설 · 스펙 4단 확장 · PART 3 제작 가이드 신설)</span></div>
+    <div class="changelog"><b>v1.2 → v1.3 변경</b> — FOMO 섹션(S3 격차) 신설: PwC 2026 AI Jobs Barometer 인용(임금 프리미엄 62%·일자리 성장 8배) + 3계층 프레임(만드는 사람/다루는 사람/밀려나는 사람). 기존 S3~S11은 S4~S12로 번호 이동, 전환 설계 11단계·총 13섹션. <span style="opacity:.7">(v1.2: 섹션 요약표 추가 · v1.1: 비교표·FAQ 편입, 전략·제작 가이드 신설)</span></div>
   </header>
 
   <!-- ═══════════════════════════════════════════ PART 1 ═══ -->
@@ -217,11 +211,11 @@
       <p class="sub">섹션 카피·후기·FAQ가 모두 아래 세 인물의 언어로 검증되어야 합니다. "이 문장을 이 사람이 이해하는가?"</p>
       <div class="grid3">
         <div class="card"><span class="kicker">P1 · AI 무력감형</span><h4>최○호 (46) · 카페 운영</h4>
-          <ul><li>AI 강의를 3개 들었지만 실무 적용 실패</li><li>"나는 컴퓨터랑 안 맞아"라는 자기규정</li><li><b>필요한 말</b>: "문제는 당신이 아니다" (S2) · "카톡하듯 쓰면 된다" (S9 후기)</li></ul></div>
+          <ul><li>AI 강의를 3개 들었지만 실무 적용 실패</li><li>"나는 컴퓨터랑 안 맞아"라는 자기규정</li><li><b>필요한 말</b>: "문제는 당신이 아니다" (S2) · "카톡하듯 쓰면 된다" (S10 후기)</li></ul></div>
         <div class="card"><span class="kicker">P2 · 채팅 한계형</span><h4>김○연 (31) · 프리랜서 디자이너</h4>
-          <ul><li>GPT 유료 구독 중 — 그러나 검색·번역·문구 수정만</li><li>매번 처음부터 설명하는 데 지침</li><li><b>필요한 말</b>: "매번 리셋 vs 쌓임" (S4·S8 비교표)</li></ul></div>
+          <ul><li>GPT 유료 구독 중 — 그러나 검색·번역·문구 수정만</li><li>매번 처음부터 설명하는 데 지침</li><li><b>필요한 말</b>: "매번 리셋 vs 쌓임" (S5·S9 비교표)</li></ul></div>
         <div class="card"><span class="kicker">P3 · 정리 포기형</span><h4>이○은 (27) · 대학원생</h4>
-          <ul><li>자료는 많은데 폴더 정리를 포기한 상태</li><li>"어디 뒀는지 못 찾는" 반복 스트레스</li><li><b>필요한 말</b>: "당신이 폴더를 몰라도 알아서" (S4)</li></ul></div>
+          <ul><li>자료는 많은데 폴더 정리를 포기한 상태</li><li>"어디 뒀는지 못 찾는" 반복 스트레스</li><li><b>필요한 말</b>: "당신이 폴더를 몰라도 알아서" (S5)</li></ul></div>
       </div>
     </div>
 
@@ -234,9 +228,9 @@
           <span>핵심 약속 — 학습 비용 0 · 첫날부터 실행</span>
         </div>
         <div class="grid3">
-          <div class="card"><span class="kicker">Pillar 1</span><h4>도구가 아니라, 함께 일하는 팀원</h4><p>맥락을 기억하고, 연관 업무를 연결하고, 기록을 자산으로 쌓는다. 중요한 실행은 반드시 내 승인.</p><span class="pillar-map">→ S4 체계 · S5 장점1</span></div>
-          <div class="card"><span class="kicker">Pillar 2</span><h4>말하면, 일이 됩니다</h4><p>설정·프롬프트·강의 없이 평소 말투로. 자동화도 대화 한마디로 만들어진다.</p><span class="pillar-map">→ S1 시연 · S3 해결 · S6 장점2</span></div>
-          <div class="card"><span class="kicker">Pillar 3</span><h4>막혀도, 혼자가 아닙니다</h4><p>사용자 커뮤니티와 원클릭 피드백. 질문해도 되는 분위기가 제품의 일부.</p><span class="pillar-map">→ S7 장점3 · S10 FAQ</span></div>
+          <div class="card"><span class="kicker">Pillar 1</span><h4>도구가 아니라, 함께 일하는 팀원</h4><p>맥락을 기억하고, 연관 업무를 연결하고, 기록을 자산으로 쌓는다. 중요한 실행은 반드시 내 승인.</p><span class="pillar-map">→ S5 체계 · S6 장점1</span></div>
+          <div class="card"><span class="kicker">Pillar 2</span><h4>말하면, 일이 됩니다</h4><p>설정·프롬프트·강의 없이 평소 말투로. 자동화도 대화 한마디로 만들어진다.</p><span class="pillar-map">→ S1 시연 · S4 해결 · S7 장점2</span></div>
+          <div class="card"><span class="kicker">Pillar 3</span><h4>막혀도, 혼자가 아닙니다</h4><p>사용자 커뮤니티와 원클릭 피드백. 질문해도 되는 분위기가 제품의 일부.</p><span class="pillar-map">→ S8 장점3 · S11 FAQ</span></div>
         </div>
         <div class="house-base">Foundation (신뢰 기반) — 설치형 · 내 데이터는 내 것 · 승인 기반 실행 · 자동 백업 → 전 섹션의 안심 문구로 반복 노출</div>
       </div>
@@ -244,18 +238,19 @@
 
     <div class="strat">
       <h3>1-4. 전환 설계 — 스크롤 심리 흐름</h3>
-      <p class="sub">12개 섹션은 아래 10단계 심리 곡선을 따릅니다. 각 섹션이 끝날 때 독자의 머릿속에 남아야 할 문장을 기준으로 검수합니다.</p>
+      <p class="sub">13개 섹션은 아래 11단계 심리 곡선을 따릅니다. 각 섹션이 끝날 때 독자의 머릿속에 남아야 할 문장을 기준으로 검수합니다.</p>
       <div class="stages">
         <div class="stage-cell"><div class="st">Hook</div><div class="sc">S0 히어로</div><div class="sd">"배우지 말라고?"</div></div>
         <div class="stage-cell"><div class="st">Show</div><div class="sc">S1 시연</div><div class="sd">"진짜 한마디로 되네"</div></div>
         <div class="stage-cell"><div class="st">Empathy</div><div class="sc">S2 고민</div><div class="sd">"완전 내 얘기다"</div></div>
-        <div class="stage-cell"><div class="st">Relief</div><div class="sc">S3 해결</div><div class="sd">"3단계면 끝이라고?"</div></div>
-        <div class="stage-cell"><div class="st">Logic</div><div class="sc">S4 체계</div><div class="sd">"아, 그래서 되는 거구나"</div></div>
-        <div class="stage-cell"><div class="st">Trust</div><div class="sc">S5–S7 장점</div><div class="sd">"믿을 만하네"</div></div>
-        <div class="stage-cell"><div class="st">Objection</div><div class="sc">S8 비교표</div><div class="sd">"GPT랑 다르구나"</div></div>
-        <div class="stage-cell"><div class="st">Proof</div><div class="sc">S9 후기</div><div class="sd">"나 같은 사람도 쓰네"</div></div>
-        <div class="stage-cell"><div class="st">Assure</div><div class="sc">S10 FAQ</div><div class="sd">"걱정할 게 없네"</div></div>
-        <div class="stage-cell"><div class="st">Act</div><div class="sc">S11 CTA</div><div class="sd">"해보자"</div></div>
+        <div class="stage-cell"><div class="st">Urgency</div><div class="sc">S3 격차</div><div class="sd">"남 얘기가 아니네"</div></div>
+        <div class="stage-cell"><div class="st">Relief</div><div class="sc">S4 해결</div><div class="sd">"3단계면 끝이라고?"</div></div>
+        <div class="stage-cell"><div class="st">Logic</div><div class="sc">S5 체계</div><div class="sd">"아, 그래서 되는 거구나"</div></div>
+        <div class="stage-cell"><div class="st">Trust</div><div class="sc">S6–S8 장점</div><div class="sd">"믿을 만하네"</div></div>
+        <div class="stage-cell"><div class="st">Objection</div><div class="sc">S9 비교표</div><div class="sd">"GPT랑 다르구나"</div></div>
+        <div class="stage-cell"><div class="st">Proof</div><div class="sc">S10 후기</div><div class="sd">"나 같은 사람도 쓰네"</div></div>
+        <div class="stage-cell"><div class="st">Assure</div><div class="sc">S11 FAQ</div><div class="sd">"걱정할 게 없네"</div></div>
+        <div class="stage-cell"><div class="st">Act</div><div class="sc">S12 CTA</div><div class="sd">"해보자"</div></div>
       </div>
     </div>
   </div>
@@ -263,12 +258,12 @@
   <!-- ═══════════════════════════════════════════ PART 2 ═══ -->
   <div class="part">
     <div class="part-head">
-      <span class="part-num">PART 2</span><h2>섹션 스토리보드</h2><p>S0–S11 · 컴포넌트 / 내용 / 비주얼·모션 / 기획 노트</p>
+      <span class="part-num">PART 2</span><h2>섹션 스토리보드</h2><p>S0–S12 · 컴포넌트 / 내용 / 비주얼·모션 / 기획 노트</p>
     </div>
 
     <div class="strat">
       <h3>2-0. 섹션 요약표 — 한눈에 보기</h3>
-      <p class="sub">12개 섹션 전체를 컴포넌트/내용/비고로 압축한 조망표입니다. 카피 대안·모션 스펙 등 상세는 아래 섹션별 스토리보드 참조.</p>
+      <p class="sub">13개 섹션 전체를 컴포넌트/내용/비고로 압축한 조망표입니다. 카피 대안·모션 스펙 등 상세는 아래 섹션별 스토리보드 참조.</p>
       <div class="tbl-scroll"><table class="plain sum">
         <tr class="hd"><th>섹션</th><td>컴포넌트</td><td>내용 (핵심 카피)</td><td>비고</td></tr>
         <tr><th>S0 히어로<span class="st-tag">Hook · 주목</span></th>
@@ -283,42 +278,46 @@
           <td>고민 말풍선 4 · 전환 카피 1줄</td>
           <td>"문제는 당신이 아니라, AI를 '배워야 쓰는 도구'로 만든 방식"</td>
           <td>말풍선은 추후 실제 VOC로 교체 시 신뢰도↑</td></tr>
-        <tr><th>S3 해결방안<span class="st-tag">Relief · 해소</span></th>
+        <tr><th>S3 격차 (FOMO)<span class="st-tag">Urgency · 위기감</span></th>
+          <td>통계 카드 2 (출처 표기) · 3계층 다이어그램 · 해결 브릿지 카피</td>
+          <td>"AI 격차는, 이미 연봉 격차입니다" — 임금 프리미엄 62%·일자리 성장 8배 (PwC 2026) + 만드는/다루는/밀려나는 사람</td>
+          <td>공포 소구는 통계 기반으로 담백하게 · 출처 연도 매년 갱신</td></tr>
+        <tr><th>S4 해결방안<span class="st-tag">Relief · 해소</span></th>
           <td>스텝 카드 3 · 첫 대화 실화면</td>
           <td>설치 → 첫 대화(AI가 먼저 질문) → 그냥 말하기</td>
           <td>'온보딩' 표기 금지 → "첫 대화"로 통일</td></tr>
-        <tr><th>S4 그리도스 체계<span class="st-tag">Logic · 이해</span></th>
+        <tr><th>S5 그리도스 체계<span class="st-tag">Logic · 이해</span></th>
           <td>3단 플로우 다이어그램 · 연결 그래프 시각화</td>
           <td>"대화는 흘러가지만, 그리도스에는 쌓입니다" · "쓸수록 나를 아는 AI"</td>
-          <td>페이지 대표 모션(그래프 성장) · S8 비교표의 논리 근거</td></tr>
-        <tr><th>S5 장점 1<span class="st-tag">Trust · 신뢰</span></th>
+          <td>페이지 대표 모션(그래프 성장) · S9 비교표의 논리 근거</td></tr>
+        <tr><th>S6 장점 1<span class="st-tag">Trust · 신뢰</span></th>
           <td>특징 카드 3 + 아이콘</td>
           <td>"도구가 아니라, 함께 일하는 팀원" — AI 파트너/데이터 소유/기록 자산화</td>
           <td class="q">팀 계정 요소 제외 · 데이터 저장 구조 확인 필요</td></tr>
-        <tr><th>S6 장점 2<span class="st-tag">Trust · 신뢰</span></th>
+        <tr><th>S7 장점 2<span class="st-tag">Trust · 신뢰</span></th>
           <td>대화 시연 4턴 · 사례 칩 5</td>
           <td>"말하면, 일이 됩니다" — 자동화 생성도 대화 한마디</td>
           <td>타이핑 애니메이션 1회 재생 · 대화는 실제 동작과 일치</td></tr>
-        <tr><th>S7 장점 3<span class="st-tag">Trust · 신뢰</span></th>
+        <tr><th>S8 장점 3<span class="st-tag">Trust · 신뢰</span></th>
           <td>커뮤니티/피드백 2칼럼 카드 · 커뮤니티 캡처</td>
           <td>"막히면, 혼자 헤매지 않습니다" — 커뮤니티 + 원클릭 피드백</td>
           <td class="q">피드백 전송 실제 형태 확인 필요</td></tr>
-        <tr><th>S8 비교표<span class="st-tag">Objection · 반론</span></th>
+        <tr><th>S9 비교표<span class="st-tag">Objection · 반론</span></th>
           <td>3행 비교(AI 채팅 vs 그리도스) · 마무리 카피</td>
           <td>기억/결과물/반복 대비 — "채팅은 대답하고 끝, 팀원은 일을 끝냅니다"</td>
           <td>타사 브랜드명 미표기 · 검증 가능한 사실만</td></tr>
-        <tr><th>S9 후기<span class="st-tag">Proof · 증거</span></th>
+        <tr><th>S10 후기<span class="st-tag">Proof · 증거</span></th>
           <td>후기 카드 4 (별점·직군·나이대)</td>
           <td>페르소나 1:1 캐스팅 — 진입장벽/기억/자동화/정리 증언</td>
           <td class="q">실후기 확보 권장 (가상 후기 시 표시광고법 검토)</td></tr>
-        <tr><th>S10 FAQ<span class="st-tag">Assure · 안심</span></th>
+        <tr><th>S11 FAQ<span class="st-tag">Assure · 안심</span></th>
           <td>아코디언 5문항 (1번 기본 펼침)</td>
           <td>Q1 "컴퓨터 잘 못하는데" 최상단 · 데이터/승인/AI 계정/가격</td>
           <td class="q">Q5 가격은 정책 확정 후 · 답변은 3문장 이내</td></tr>
-        <tr><th>S11 CTA<span class="st-tag">Act · 전환</span></th>
+        <tr><th>S12 CTA<span class="st-tag">Act · 전환</span></th>
           <td>마무리 헤드라인 · CTA 1개 · 안심 문구 3요소</td>
           <td>"오늘부터, AI 팀원과 일하세요" · "배우는 데 걸리는 시간: 0분"</td>
-          <td>S0과 동일 문구·목적지 · 스티키 바는 S3부터 노출</td></tr>
+          <td>S0과 동일 문구·목적지 · 스티키 바는 S4부터 노출</td></tr>
       </table></div>
     </div>
   </div>
@@ -402,14 +401,45 @@
         <div class="spec-block"><h3>비주얼 · 모션</h3>
           <ul><li class="note">말풍선은 채팅 UI 톤 — "채팅만 하는 유저"가 자기 화면처럼 느끼게.</li><li class="note">스크롤 시 말풍선 순차 등장(0.15초 간격) → 전환 카피는 여백을 두고 단독 등장.</li></ul></div>
         <div class="spec-block"><h3>기획 노트</h3>
-          <ul><li class="note">전환 카피가 이 섹션의 전부 — 자책 해소가 되어야 S3의 해법이 '내 것'으로 들린다.</li><li class="note">말풍선 문구는 추후 실제 VOC·커뮤니티 질문에서 발췌해 교체하면 신뢰도 상승.</li></ul></div>
+          <ul><li class="note">전환 카피가 이 섹션의 전부 — 자책 해소가 되어야 S4의 해법이 '내 것'으로 들린다.</li><li class="note">말풍선 문구는 추후 실제 VOC·커뮤니티 질문에서 발췌해 교체하면 신뢰도 상승.</li></ul></div>
       </div>
     </div>
   </section>
 
   <!-- ═══════ S3 ═══════ -->
   <section class="sb">
-    <div class="sb-head"><span class="sb-num">S3</span><h2>해결방안 — 설치 → 첫 대화 → 실행</h2><span class="badge stage">RELIEF · 해소</span></div>
+    <div class="sb-head"><span class="sb-num">S3</span><h2>격차 — 쓰는 사람과 안 쓰는 사람</h2><span class="badge stage">URGENCY · 위기감</span></div>
+    <p class="sb-goal">"남 얘기가 아니네"를 만드는 FOMO 섹션. 공감(S2)으로 풀린 자책을 '지금 시작할 이유'로 전환한다.</p>
+    <p class="sb-logic"><b>전환 논리</b> — S2가 "당신 잘못이 아니다"로 마음을 열었다면, S3는 "그래도 미루면 격차는 벌어진다"는 외부 사실을 보여 행동 동기를 만든다. 위기감은 통계와 출처로 담백하게 — 과장하면 바로 뒤 S4의 해소가 가볍게 들린다.</p>
+    <div class="sb-body">
+      <div class="frame">
+        <div class="frame-label">WIREFRAME · 통계 + 3계층</div>
+        <p class="wf-h">AI 격차는,<br>이미 연봉 격차입니다</p>
+        <div class="wf-row">
+          <div class="wf-card" style="text-align:center"><h4>+62%</h4><p>AI 스킬 보유자 임금 프리미엄<br><span style="opacity:.6">PwC 2026 AI Jobs Barometer</span></p></div>
+          <div class="wf-card" style="text-align:center"><h4>8배</h4><p>AI 활용 직무 일자리 성장<br><span style="opacity:.6">PwC 2026 AI Jobs Barometer</span></p></div>
+        </div>
+        <div class="wf-card"><h4>🛠 만드는 사람</h4><p>AI를 개발하는 소수 — 당신이 될 필요 없는 자리</p></div>
+        <div class="wf-card" style="border-width:2px"><h4>💬 다루는 사람 ←</h4><p>AI에게 말로 일을 시키는 사람 — 그리도스가 만들어 주는 자리</p></div>
+        <div class="wf-card" style="opacity:.55"><h4>🚶 밀려나는 사람</h4><p>"나중에 배우지"가 쌓인 사람</p></div>
+        <p class="wf-sub" style="text-align:center">코딩을 배울 필요는 없습니다. <b>'다루는 사람'이면 충분합니다</b> — 다음 섹션에서 그 방법을 보여드립니다</p>
+      </div>
+      <div class="spec">
+        <div class="spec-block k1"><h3>컴포넌트</h3>
+          <ul><li>섹션 헤드라인 (격차 = 연봉)</li><li>통계 카드 2개 — 수치 + 출처 병기</li><li>3계층 다이어그램 (만드는/다루는/밀려나는)</li><li>해결 브릿지 카피 1줄 — S4로 넘기는 연결 고리</li></ul></div>
+        <div class="spec-block"><h3>내용 (카피)</h3>
+          <ul><li class="copy">통계 ①: AI 스킬 보유자 임금 프리미엄 +62% (PwC 2026 AI Jobs Barometer)</li><li class="copy">통계 ②: AI 활용 직무 일자리 성장 8배 (동일 출처)</li><li class="copy">3계층: 만드는 사람(개발자·소수) / 다루는 사람(말로 시키는 사람) / 밀려나는 사람("나중에"가 쌓인 사람)</li><li class="copy">브릿지: "코딩을 배울 필요는 없습니다. '다루는 사람'이면 충분합니다"</li></ul></div>
+        <div class="spec-block"><h3>비주얼 · 모션</h3>
+          <ul><li class="note">통계 수치는 스크롤 진입 시 카운트업 1회 — 반복 재생 금지(호들갑 방지).</li><li class="note">3계층 중 '다루는 사람' 층만 본색 하이라이트, 나머지는 저채도 — 독자가 설 자리를 색으로 지정.</li><li class="note">배경을 어두운 밴드로 전환해 페이지 리듬을 만든다: S2 공감(밝음) → S3 긴장(어두움) → S4 해소(밝음).</li></ul></div>
+        <div class="spec-block"><h3>기획 노트</h3>
+          <ul><li class="note">공포 소구는 통계+출처 표기로 담백하게 유지 — 위협적 카피("도태됩니다" 류) 금지. 출처 연도는 매년 갱신.</li><li class="note">독자를 '밀려나는 사람'으로 지목하는 단정 카피 금지 — 위치 선택은 독자에게 맡기는 화법("어디에 서시겠어요?")까지만.</li><li class="q">인용 수치는 게시 전 PwC 원문 재확인 필요 (연도·지표 정의).</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ S4 ═══════ -->
+  <section class="sb">
+    <div class="sb-head"><span class="sb-num">S4</span><h2>해결방안 — 설치 → 첫 대화 → 실행</h2><span class="badge stage">RELIEF · 해소</span></div>
     <p class="sb-goal">"강의 없이 3단계면 끝"이라는 낮은 진입장벽을 프로세스로 증명.</p>
     <p class="sb-logic"><b>전환 논리</b> — 공감으로 열린 마음에 '구체적이고 짧은 절차'를 제시. 단계가 3개를 넘거나 용어가 어려우면 S2에서 만든 신뢰가 즉시 붕괴된다.</p>
     <div class="sb-body">
@@ -427,16 +457,16 @@
         <div class="spec-block"><h3>내용 (카피)</h3>
           <ul><li class="copy">"어려운 강의는 필요 없습니다. 설치하고, 대답하고, 말하세요."</li><li class="copy">STEP 2 핵심: "AI가 먼저 물어봅니다" — 사용자가 배우는 게 아니라 <b>AI가 사용자를 배운다</b>는 관점 전환.</li></ul></div>
         <div class="spec-block"><h3>비주얼 · 모션</h3>
-          <ul><li class="note">스텝 카드는 세로 진행 + 연결선 — 순서가 정보이므로 번호 마커 사용 (이 페이지에서 번호는 S3에만).</li><li class="note">STEP 2 캡처에는 AI의 질문 말풍선이 보이도록 — "AI가 먼저 묻는다"의 시각 증거.</li></ul></div>
+          <ul><li class="note">스텝 카드는 세로 진행 + 연결선 — 순서가 정보이므로 번호 마커 사용 (이 페이지에서 번호는 S4에만).</li><li class="note">STEP 2 캡처에는 AI의 질문 말풍선이 보이도록 — "AI가 먼저 묻는다"의 시각 증거.</li></ul></div>
         <div class="spec-block"><h3>기획 노트</h3>
           <ul><li class="note">'온보딩'이라는 단어 자체가 타겟에게 장벽 — 화면 표기는 <b>"첫 대화"</b>로 통일.</li></ul></div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════ S4 ═══════ -->
+  <!-- ═══════ S5 ═══════ -->
   <section class="sb">
-    <div class="sb-head"><span class="sb-num">S4</span><h2>그리도스 체계 — 맥락 연결 + 폴더 적층</h2><span class="badge stage">LOGIC · 이해</span></div>
+    <div class="sb-head"><span class="sb-num">S5</span><h2>그리도스 체계 — 맥락 연결 + 폴더 적층</h2><span class="badge stage">LOGIC · 이해</span></div>
     <p class="sb-goal">"왜 그리도스는 되는가"의 원리를 다이어그램 하나로. 채팅형 AI와의 구조적 차이.</p>
     <p class="sb-logic"><b>전환 논리</b> — 여기까지 온 독자는 "그럴듯한데, 원리가 뭐지?"라는 합리화 근거를 찾는다. 원리를 이해한 사용자는 이탈률이 급감한다 — 단, 설명은 은유로.</p>
     <div class="sb-body">
@@ -459,16 +489,16 @@
         <div class="spec-block"><h3>비주얼 · 모션</h3>
           <ul><li class="note">그래프 시각화는 노드가 연결되며 자라나는 애니메이션 — '축적'을 몸으로 느끼게 하는 이 페이지의 대표 모션.</li><li class="note">파일 아이콘·디렉토리 트리 같은 기술적 표현 대신 '서랍에 정리되는' 은유적 표현 검토.</li></ul></div>
         <div class="spec-block"><h3>기획 노트</h3>
-          <ul><li class="note">이 섹션이 일반 채팅 AI와의 <b>결정적 차별점</b> — S8 비교표의 논리 근거가 여기서 심어진다.</li><li class="note">"폴더" 강조는 양날 — 타겟이 폴더를 어려워하므로 <b>"당신이 몰라도 알아서"</b> 프레임 필수. S2의 "폴더? 터미널?" 고민과 직접 호응.</li></ul></div>
+          <ul><li class="note">이 섹션이 일반 채팅 AI와의 <b>결정적 차별점</b> — S9 비교표의 논리 근거가 여기서 심어진다.</li><li class="note">"폴더" 강조는 양날 — 타겟이 폴더를 어려워하므로 <b>"당신이 몰라도 알아서"</b> 프레임 필수. S2의 "폴더? 터미널?" 고민과 직접 호응.</li></ul></div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════ S5 ═══════ -->
+  <!-- ═══════ S6 ═══════ -->
   <section class="sb">
-    <div class="sb-head"><span class="sb-num">S5</span><h2>장점 1 — 도구가 아니라, 함께 일하는 팀원</h2><span class="badge stage">TRUST · 신뢰</span></div>
+    <div class="sb-head"><span class="sb-num">S6</span><h2>장점 1 — 도구가 아니라, 함께 일하는 팀원</h2><span class="badge stage">TRUST · 신뢰</span></div>
     <p class="sb-goal">현행 홈페이지의 핵심 포지셔닝을 일반 사용자 언어로 이식.</p>
-    <p class="sb-logic"><b>전환 논리</b> — 원리(S4)를 이해한 독자에게 제품의 '태도'를 각인. Pillar 1의 본진. "승인 없이 실행하지 않음"으로 AI 불안감도 함께 해소.</p>
+    <p class="sb-logic"><b>전환 논리</b> — 원리(S5)를 이해한 독자에게 제품의 '태도'를 각인. Pillar 1의 본진. "승인 없이 실행하지 않음"으로 AI 불안감도 함께 해소.</p>
     <div class="sb-body">
       <div class="frame">
         <div class="frame-label">WIREFRAME · 특징 카드</div>
@@ -490,9 +520,9 @@
     </div>
   </section>
 
-  <!-- ═══════ S6 ═══════ -->
+  <!-- ═══════ S7 ═══════ -->
   <section class="sb">
-    <div class="sb-head"><span class="sb-num">S6</span><h2>장점 2 — 말하면, 일이 됩니다</h2><span class="badge stage">TRUST · 신뢰</span></div>
+    <div class="sb-head"><span class="sb-num">S7</span><h2>장점 2 — 말하면, 일이 됩니다</h2><span class="badge stage">TRUST · 신뢰</span></div>
     <p class="sb-goal">'배울 필요 없음'을 실제 대화 장면으로 증명. 페이지에서 가장 구체적인 섹션.</p>
     <p class="sb-logic"><b>전환 논리</b> — Pillar 2의 본진. 대화 마지막 턴("매주 자동으로 해줘")에서 <b>자동화 생성이 곧 대화</b>임을 보여주면 S0의 약속이 완결된다.</p>
     <div class="sb-body">
@@ -522,9 +552,9 @@
     </div>
   </section>
 
-  <!-- ═══════ S7 ═══════ -->
+  <!-- ═══════ S8 ═══════ -->
   <section class="sb">
-    <div class="sb-head"><span class="sb-num">S7</span><h2>장점 3 — 막히면, 혼자 헤매지 않습니다</h2><span class="badge stage">TRUST · 신뢰</span></div>
+    <div class="sb-head"><span class="sb-num">S8</span><h2>장점 3 — 막히면, 혼자 헤매지 않습니다</h2><span class="badge stage">TRUST · 신뢰</span></div>
     <p class="sb-goal">"어려우면 어쩌지"라는 마지막 불안을 커뮤니티 + 피드백 채널로 해소.</p>
     <p class="sb-logic"><b>전환 논리</b> — Pillar 3의 본진. 타겟은 '살 때'보다 '막혔을 때'를 두려워한다. 구매 후 지원의 존재가 구매 전 결심을 만든다.</p>
     <div class="sb-body">
@@ -550,11 +580,11 @@
     </div>
   </section>
 
-  <!-- ═══════ S8 ═══════ -->
+  <!-- ═══════ S9 ═══════ -->
   <section class="sb">
-    <div class="sb-head"><span class="sb-num">S8</span><h2>비교표 — 그냥 AI 채팅 vs 그리도스</h2><span class="badge stage">OBJECTION · 반론 해소</span><span class="badge new">v1.1 정식 편입</span></div>
+    <div class="sb-head"><span class="sb-num">S9</span><h2>비교표 — 그냥 AI 채팅 vs 그리도스</h2><span class="badge stage">OBJECTION · 반론 해소</span><span class="badge new">v1.1 정식 편입</span></div>
     <p class="sb-goal">"이미 GPT 쓰는데 왜 또?"라는 핵심 반론에 정면 대응 + 장점 3개를 한 번에 요약.</p>
-    <p class="sb-logic"><b>전환 논리</b> — P2(채팅 한계형)의 결정 관문. S4에서 심은 "리셋 vs 축적" 논리를 표 형식으로 회수한다. 장점 열람이 끝난 직후, 후기 직전이 최적 위치.</p>
+    <p class="sb-logic"><b>전환 논리</b> — P2(채팅 한계형)의 결정 관문. S5에서 심은 "리셋 vs 축적" 논리를 표 형식으로 회수한다. 장점 열람이 끝난 직후, 후기 직전이 최적 위치.</p>
     <div class="sb-body">
       <div class="frame">
         <div class="frame-label">WIREFRAME · 3행 비교</div>
@@ -577,11 +607,11 @@
     </div>
   </section>
 
-  <!-- ═══════ S9 ═══════ -->
+  <!-- ═══════ S10 ═══════ -->
   <section class="sb">
-    <div class="sb-head"><span class="sb-num">S9</span><h2>후기</h2><span class="badge stage">PROOF · 사회적 증거</span></div>
+    <div class="sb-head"><span class="sb-num">S10</span><h2>후기</h2><span class="badge stage">PROOF · 사회적 증거</span></div>
     <p class="sb-goal">"나 같은 사람도 쓰는구나"의 사회적 증거. 직군·연령을 페르소나에 맞춰 배치.</p>
-    <p class="sb-logic"><b>전환 논리</b> — 논리 설득(S8)이 끝난 자리에 감정 확신을 얹는다. 후기 인물 = 페르소나 — 독자가 자기와 같은 사람을 발견하게 하는 캐스팅이 핵심.</p>
+    <p class="sb-logic"><b>전환 논리</b> — 논리 설득(S9)이 끝난 자리에 감정 확신을 얹는다. 후기 인물 = 페르소나 — 독자가 자기와 같은 사람을 발견하게 하는 캐스팅이 핵심.</p>
     <div class="sb-body">
       <div class="frame">
         <div class="frame-label">WIREFRAME · 후기 카드</div>
@@ -595,7 +625,7 @@
         <div class="spec-block k1"><h3>컴포넌트</h3>
           <ul><li>섹션 헤드라인</li><li>후기 카드 4개 (별점·이름·직군·나이대)</li></ul></div>
         <div class="spec-block"><h3>내용 (캐스팅 설계)</h3>
-          <ul><li class="copy">① P1 카페 사장 → 진입장벽 해소 증언 (S3 호응) — 타겟 대표 인물이므로 맨 앞</li><li class="copy">② P2 디자이너 → 기억·맥락 증언 (S4·S8 호응)</li><li class="copy">③ 쇼핑몰 운영 → 자동화 증언 (S6 호응)</li><li class="copy">④ P3 대학원생 → 폴더 정리 증언 (S4 호응)</li></ul></div>
+          <ul><li class="copy">① P1 카페 사장 → 진입장벽 해소 증언 (S4 호응) — 타겟 대표 인물이므로 맨 앞</li><li class="copy">② P2 디자이너 → 기억·맥락 증언 (S5·S9 호응)</li><li class="copy">③ 쇼핑몰 운영 → 자동화 증언 (S7 호응)</li><li class="copy">④ P3 대학원생 → 폴더 정리 증언 (S5 호응)</li></ul></div>
         <div class="spec-block"><h3>비주얼 · 모션</h3>
           <ul><li class="note">증명사진형 인물 이미지 금지(가상 인물 리스크) — 이니셜 아바타 or 무인물 처리.</li></ul></div>
         <div class="spec-block"><h3>기획 노트</h3>
@@ -604,9 +634,9 @@
     </div>
   </section>
 
-  <!-- ═══════ S10 ═══════ -->
+  <!-- ═══════ S11 ═══════ -->
   <section class="sb">
-    <div class="sb-head"><span class="sb-num">S10</span><h2>FAQ — 마지막 불안 해소</h2><span class="badge stage">ASSURE · 안심</span><span class="badge new">v1.1 정식 편입</span></div>
+    <div class="sb-head"><span class="sb-num">S11</span><h2>FAQ — 마지막 불안 해소</h2><span class="badge stage">ASSURE · 안심</span><span class="badge new">v1.1 정식 편입</span></div>
     <p class="sb-goal">전환 직전의 망설임 제거. 이탈 방지 마지막 관문.</p>
     <p class="sb-logic"><b>전환 논리</b> — CTA 직전, 독자의 머릿속에 남은 질문을 선제 답변으로 비운다. 1번 질문은 반드시 타겟의 최종 불안("컴퓨터 잘 못하는데")이어야 한다.</p>
     <div class="sb-body">
@@ -632,9 +662,9 @@
     </div>
   </section>
 
-  <!-- ═══════ S11 ═══════ -->
+  <!-- ═══════ S12 ═══════ -->
   <section class="sb">
-    <div class="sb-head"><span class="sb-num">S11</span><h2>CTA — 마무리 전환</h2><span class="badge stage">ACT · 전환</span></div>
+    <div class="sb-head"><span class="sb-num">S12</span><h2>CTA — 마무리 전환</h2><span class="badge stage">ACT · 전환</span></div>
     <p class="sb-goal">감정이 최고점일 때 단일 행동으로 수렴. 선택지는 하나만.</p>
     <p class="sb-logic"><b>전환 논리</b> — S0과 동일 문구·동일 목적지의 CTA로 회귀 — 페이지 전체가 하나의 버튼으로 기억되게 한다. 서브카피는 핵심 약속(학습 비용 0)의 마지막 반복.</p>
     <div class="sb-body">
@@ -651,9 +681,9 @@
         <div class="spec-block"><h3>내용 (카피)</h3>
           <ul><li class="copy">"오늘부터, AI 팀원과 일하세요"</li><li class="copy">서브: "배우는 데 걸리는 시간: 0분"</li><li class="note">현행 B2B "팀에 AI를 채용하세요"의 개인 시점 변환.</li></ul></div>
         <div class="spec-block"><h3>비주얼 · 모션</h3>
-          <ul><li class="note">S3 통과 시점부터 하단 스티키 CTA 바 노출(모바일) — 최종 CTA 도달 전 이탈 회수 장치.</li><li class="note">스티키 바는 S11 도달 시 자동 숨김 (CTA 중복 노출 방지).</li></ul></div>
+          <ul><li class="note">S4 통과 시점부터 하단 스티키 CTA 바 노출(모바일) — 최종 CTA 도달 전 이탈 회수 장치.</li><li class="note">스티키 바는 S12 도달 시 자동 숨김 (CTA 중복 노출 방지).</li></ul></div>
         <div class="spec-block"><h3>기획 노트</h3>
-          <ul><li class="note">CTA 위치는 총 3곳 — S0(히어로) / 스티키 바 / S11(최종). 문구는 전부 동일.</li></ul></div>
+          <ul><li class="note">CTA 위치는 총 3곳 — S0(히어로) / 스티키 바 / S12(최종). 문구는 전부 동일.</li></ul></div>
       </div>
     </div>
   </section>
@@ -677,8 +707,8 @@
           <ul>
             <li>제품 증거는 전부 <b>실화면 녹화/캡처</b> — 합성 목업·과장 그래픽 금지</li>
             <li>아이콘·일러스트에서 로봇·회로·매트릭스류 금지 — '어려운 기술' 인상을 강화함</li>
-            <li>Before(회색·저채도) vs After(본색)의 색 문법을 S1·S8에서 일관 적용</li>
-            <li>모션은 섹션당 1개 핵심 연출만 — 대표 모션은 S4 그래프 성장 애니메이션</li>
+            <li>Before(회색·저채도) vs After(본색)의 색 문법을 S1·S9에서 일관 적용</li>
+            <li>모션은 섹션당 1개 핵심 연출만 — 대표 모션은 S5 그래프 성장 애니메이션</li>
           </ul></div>
       </div>
     </div>
@@ -688,11 +718,11 @@
       <p class="sub">런칭 후 섹션별 설득력을 데이터로 검증하기 위한 최소 이벤트 셋. 상세페이지는 '만들고 끝'이 아니라 이탈 지점을 보고 고치는 대상입니다.</p>
       <div class="tbl-scroll"><table class="plain">
         <tr><th>이벤트</th><td><b>파라미터</b></td><td><b>판단 용도</b></td></tr>
-        <tr><th>scroll_depth</th><td>25 / 50 / 75 / 100%</td><td>어느 스테이지에서 이탈하는가 — 50% 미만 이탈 과다 시 S2~S4 재검토</td></tr>
-        <tr><th>section_view</th><td>section_id (S0~S11)</td><td>섹션별 도달률 — 비교표(S8)·후기(S9) 도달률이 전환의 선행 지표</td></tr>
+        <tr><th>scroll_depth</th><td>25 / 50 / 75 / 100%</td><td>어느 스테이지에서 이탈하는가 — 50% 미만 이탈 과다 시 S2~S5 재검토</td></tr>
+        <tr><th>section_view</th><td>section_id (S0~S12)</td><td>섹션별 도달률 — 비교표(S9)·후기(S10) 도달률이 전환의 선행 지표</td></tr>
         <tr><th>cta_click</th><td>position (hero / sticky / final)</td><td>어떤 감정 지점에서 전환되는가 — hero 비중이 높으면 페이지 축약 검토</td></tr>
         <tr><th>faq_open</th><td>question_id (Q1~Q5)</td><td>실제 불안 순위 파악 → 문항 순서·본문 카피 보강</td></tr>
-        <tr><th>video_play / complete</th><td>video_id (hero / S6)</td><td>시연 영상의 후킹력 — 완주율 낮으면 15초 초과 여부 점검</td></tr>
+        <tr><th>video_play / complete</th><td>video_id (hero / S7)</td><td>시연 영상의 후킹력 — 완주율 낮으면 15초 초과 여부 점검</td></tr>
       </table></div>
     </div>
 
@@ -702,12 +732,12 @@
         <tr><th>에셋</th><td><b>사용 위치</b></td><td><b>형태 · 요건</b></td></tr>
         <tr><th>대화→결과 시연 영상</th><td>S0 히어로</td><td>실화면 녹화 15초 루프 · 무음 자동재생 · 모바일 세로 크롭 별도</td></tr>
         <tr><th>After 실화면 캡처 3컷</th><td>S1</td><td>리포트 완성 / 히스토리 답변 / 반복 실행 각 1컷</td></tr>
-        <tr><th>첫 대화 화면 캡처</th><td>S3</td><td>AI가 먼저 질문하는 장면이 보이도록</td></tr>
-        <tr><th>연결 그래프/폴더 시각화</th><td>S4</td><td>실화면 기반 + 성장 애니메이션 (페이지 대표 모션)</td></tr>
-        <tr><th>대화 시연 스크립트</th><td>S6</td><td>지출 정리 4턴 — 실제 제품 동작과 일치해야 함</td></tr>
-        <tr><th>커뮤니티 캡처</th><td>S7</td><td>왕초보 질문 + 친절 답변 글 선별</td></tr>
-        <tr><th>특징 아이콘 세트</th><td>S5·S7</td><td>일상 오브젝트 계열 5종 (로봇·회로 금지)</td></tr>
-        <tr><th>후기 4건</th><td>S9</td><td class="q">베타/체험단 실후기 확보 권장 — 가상 후기 시 표기 검토</td></tr>
+        <tr><th>첫 대화 화면 캡처</th><td>S4</td><td>AI가 먼저 질문하는 장면이 보이도록</td></tr>
+        <tr><th>연결 그래프/폴더 시각화</th><td>S5</td><td>실화면 기반 + 성장 애니메이션 (페이지 대표 모션)</td></tr>
+        <tr><th>대화 시연 스크립트</th><td>S7</td><td>지출 정리 4턴 — 실제 제품 동작과 일치해야 함</td></tr>
+        <tr><th>커뮤니티 캡처</th><td>S8</td><td>왕초보 질문 + 친절 답변 글 선별</td></tr>
+        <tr><th>특징 아이콘 세트</th><td>S6·S8</td><td>일상 오브젝트 계열 5종 (로봇·회로 금지)</td></tr>
+        <tr><th>후기 4건</th><td>S10</td><td class="q">베타/체험단 실후기 확보 권장 — 가상 후기 시 표기 검토</td></tr>
       </table></div>
     </div>
 
@@ -718,15 +748,13 @@
         <li><b>가격 정책</b> — 무료+내 AI 계정 연결(퍼스널 방식) vs 구독형. FAQ Q4·Q5 답변 확정용.</li>
         <li><b>실화면 제공 범위</b> — 에셋 체크리스트(3-3)의 8종 중 제작 가능 항목 확인. 시연 영상이 최우선.</li>
         <li><b>후기 소스</b> — 베타 테스터 실후기 확보 가능 여부. 불가 시 가상 후기 표기 방식 결정.</li>
-        <li><b>데이터 저장 구조</b> — 개인 버전도 '내 컴퓨터에만'인지 (S5·FAQ Q2 카피 확정용).</li>
+        <li><b>데이터 저장 구조</b> — 개인 버전도 '내 컴퓨터에만'인지 (S6·FAQ Q2 카피 확정용).</li>
       </ol>
     </div>
   </div>
 
   <footer class="foot">
-    GRID.OS 상세페이지 기획안 v1.2 · GRIM Communications · 2026-08-11 · PART 1 전략 — PART 2 스토리보드(요약표 + S0–S11) — PART 3 제작 가이드 · 확정 후 실제 상세페이지 제작 착수
+    GRID.OS 상세페이지 기획안 v1.2 · GRIM Communications · 2026-08-11 · PART 1 전략 — PART 2 스토리보드(요약표 + S0–S12) — PART 3 제작 가이드 · 확정 후 실제 상세페이지 제작 착수
   </footer>
 
 </div>
-
-</html>
